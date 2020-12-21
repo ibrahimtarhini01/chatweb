@@ -16,12 +16,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  outline: none !important;
+}
+
+.form-control:focus {
+  border: none;
+  box-shadow: none;
 }
 
 /* Utils */
+
+.bg-black {
+  background-color: #000;
+}
 .bg-main {
   background-color: #2f3136;
 }

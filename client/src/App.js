@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // layout
 import Container from './components/layout/Container';
+import Navbar from './components/layout/Navbar';
 
 // Auth
 import Account from './components/auth/Account';
@@ -16,6 +17,7 @@ const App = () => {
   return (
     <Fragment>
       <Router>
+        <Navbar />
         <Switch>
           <Route
             exact

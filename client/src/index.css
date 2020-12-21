@@ -1,4 +1,13 @@
+*,
+::before,
+::after {
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+
 body {
+  background-color: #202225;
+  color: #dcddde;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +19,33 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Utils */
+.bg-main {
+  background-color: #2f3136;
+}
+
+.bg-selected {
+  background-color: #292b2f;
+}
+
+/* custom */
+
+@media (min-width: 600px) {
+  .account {
+    margin: 0 15% 0 15%;
+  }
+}
+
+@media (min-width: 991px) {
+  .account-input {
+    width: 50% !important;
+  }
+}
+
+@media (min-width: 576px) {
+  .account-btn {
+    width: 30% !important;
+  }
 }

@@ -1,8 +1,26 @@
 const express = require('express');
+const connectDB = require('./config/db'); // Mongoose configs
+
+// Utils
 const colors = require('colors');
 const morgan = require('morgan');
+const cors = require('cors');
+const compression = require('compression');
 const dotenv = require('dotenv');
-const connectDB = require('./config/db');
+
+// Passport
+const passport = require('passport');
+const passportLocal = require('passport-local').Strategy;
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
+// Security
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const hpp = require('hpp');
+const xss = require('xss-clean');
+
 // ENVIROMENT VARIABLES
 dotenv.config({ path: './config/config.env' });
 
@@ -12,13 +30,70 @@ const app = express();
 //Connect to DB
 connectDB();
 
+// Body Parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ---------- Utils ----------
 
 // Use Morgan to log reqs
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// compress all responses
+app.use(compression());
+
+// ---------- Security ----------
+
+// Sanitize data
+app.use(mongoSanitize());
+
+// Prevent XSS attacks
+app.use(xss());
+
+// Prevent http param pollution
+app.use(hpp());
+
+// Set security header
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  }),
+);
+
+// Enable CORS
+app.use(
+  cors({
+    origin: 'https://localhost:5000',
+    credentials: true,
+  }),
+);
+
+// ---------- Passport Middleware and Set Up ----------
+
+// Set up express session
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: true,
+    resave: true,
+    store: new MongoStore({
+      url: process.env.MONGO_URI,
+      collection: 'sessions',
+    }),
+  }),
+);
+
+// initialize cookieParser middleware
+app.use(cookieParser(process.env.SESSION_SECRET));
+
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passportConfig')(passport);
+
+// ---------- Routes ----------
 
 const PORT = process.env.PORT || 5000;
 

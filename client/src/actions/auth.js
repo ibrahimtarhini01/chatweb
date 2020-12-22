@@ -1,6 +1,6 @@
 import { AUTH_SUCCESS, LOGOUT, USER_LOADED, AUTH_ERROR, AUTH } from './types';
 import api from '../utils/api';
-//import { setAlert } from './alerts';
+import { setAlert } from './alerts';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -48,7 +48,7 @@ export const login = (username, password) => async (dispatch) => {
   const body = { username, password };
   try {
     const res = await api.post('/auth/login', body);
-    dispatch({ type: AUTH_SUCCESS, payload: res.data.data });
+    dispatch({ type: AUTH_SUCCESS, payload: res.data.user });
   } catch (err) {
     console.log(err);
     const errors = err.response.data.errors;

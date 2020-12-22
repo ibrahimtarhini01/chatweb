@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 //Design
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,6 +16,7 @@ import Navbar from './components/layout/Navbar';
 
 // Auth
 import Account from './components/auth/Account';
+import Confirm from './components/auth/Confirm';
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
               />
             )}
           />
+          <Route exact path='/confirm/:token' component={Confirm} />
         </Switch>
       </Router>
     </Provider>

@@ -7,6 +7,7 @@ const {
   changePassword,
   deleteUser,
   confirmEmail,
+  getCurrentUser,
 } = require('../controllers/auth');
 const { protect } = require('../middleware/auth');
 const router = express.Router();
@@ -18,5 +19,6 @@ router.get('/check', protect, checkAuth);
 router.put('/password', changePassword);
 router.delete('/delete', deleteUser);
 router.get('/confirmation/:token', confirmEmail);
+router.get('/me', getCurrentUser);
 
 module.exports = router;

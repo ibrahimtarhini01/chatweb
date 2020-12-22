@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import Alert from '../layout/Alert';
+import { connect } from 'react-redux';
+import { login } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-const SignIn = ({ login, user }) => {
+const SignIn = ({ login }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -17,13 +20,14 @@ const SignIn = ({ login, user }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
-
+    login(username, password);
     //setFormData({ username: '', password: '' });
     console.log(formData);
   };
 
   return (
     <div className='card-body '>
+      <Alert />
       <form onSubmit={(e) => onSubmit(e)}>
         <label htmlFor='username'>Username</label>
         <div className='form-inline  mb-4'>
@@ -76,7 +80,7 @@ const SignIn = ({ login, user }) => {
                 id='gridCheck'
               />
               <label className='form-check-label' htmlFor='gridCheck'>
-                Remember me
+                Keep me logged in
               </label>
             </div>
           </div>
@@ -101,4 +105,8 @@ const SignIn = ({ login, user }) => {
   );
 };
 
-export default SignIn;
+SignIn.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+
+export default connect(null, { login })(SignIn);

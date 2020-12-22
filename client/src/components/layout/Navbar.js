@@ -1,16 +1,38 @@
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { isAuth, logout } from '../../actions/auth';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const Navbar = () => {
+const Navbar = ({ isAuth, isAuthenticated, user, logout }) => {
+  useEffect(() => {
+    if (isAuthenticated === false) {
+      isAuth();
+    }
+  }, [isAuth, isAuthenticated]);
   return (
     <div className='navbar sticky-top  navbar-expand-lg bg-black  '>
       <div className='container-lg'>
         <NavLink className='navbar-brand text-white pt-2 text-center  ' to='/'>
-          <img src='chathub-brand.jpg' alt='brand' className='w-75 ' />
+          <img src='/chathub-brand.jpg' alt='brand' className='w-75 ' />
         </NavLink>
+        <button className='btn-link btn' onClick={logout}>
+          logout
+        </button>
       </div>
     </div>
   );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+  isAuth: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  user: PropTypes.object,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, { isAuth, logout })(Navbar);

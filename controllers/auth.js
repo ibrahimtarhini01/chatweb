@@ -29,7 +29,7 @@ exports.register = async (req, res) => {
     await user.save({ validateBeforeSave: false });
 
     // Create reset URL
-    const resetUrl = `https://localhost:5000/api/auth/confirmation/${resetToken}`;
+    const resetUrl = `http://localhost:3000/confirm/${resetToken}`;
 
     console.log(resetUrl);
 
@@ -113,6 +113,10 @@ exports.login = (req, res, next) => {
 exports.logout = (req, res) => {
   req.logOut();
   res.status(200).json({ message: 'logged out' });
+};
+
+exports.getCurrentUser = (req, res) => {
+  res.status(200).json({ success: true, data: req.user });
 };
 
 // @route   GET /api/auth/logout

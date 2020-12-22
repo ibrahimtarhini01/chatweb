@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { register } from '../../actions/auth';
+import { setAlert } from '../../actions/alerts';
+import Alert from '../layout/Alert';
+import PropTypes from 'prop-types';
 
-const Register = () => {
+const Register = ({ register, setAlert, sent }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -20,12 +25,16 @@ const Register = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (password === password2) {
+      register(formData);
+    } else {
+      setAlert('Passwords do not match');
     }
     window.scrollTo(0, 0);
   };
   return (
     <div className='card-body '>
-      {false ? (
+      <Alert />
+      {!sent ? (
         <form onSubmit={(e) => onSubmit(e)}>
           <label htmlFor='username'>Username</label>
           <div className='form-inline  mb-4'>
@@ -129,4 +138,13 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  sent: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  sent: state.auth.sent,
+});
+export default connect(mapStateToProps, { setAlert, register })(Register);

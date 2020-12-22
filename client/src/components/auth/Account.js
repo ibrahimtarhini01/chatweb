@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import SignIn from './SignIn';
-
 import Register from './Register';
 
-const Account = () => {
+const Account = ({ isAuthenticated }) => {
   const [login, setLogin] = useState(true);
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
+
   return (
     <div>
       <div className='card text-white mb-3 bg-main rounded-0 account'>
@@ -30,4 +36,12 @@ const Account = () => {
   );
 };
 
-export default Account;
+Account.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {})(Account);

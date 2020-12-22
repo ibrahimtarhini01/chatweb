@@ -5,7 +5,7 @@ import { setAlert } from './alerts';
 // Load User
 export const loadUser = () => async (dispatch) => {
   try {
-    const res = await api.get('/user/me');
+    const res = await api.get('/auth/me');
 
     dispatch({
       type: USER_LOADED,
@@ -30,6 +30,9 @@ export const confirmUser = (token) => async (dispatch) => {
 export const register = (formData) => async (dispatch) => {
   try {
     await api.post('/auth/register', formData);
+    dispatch({
+      type: AUTH_SUCCESS,
+    });
   } catch (err) {
     console.log(err);
     const errors = err.response.data.errors;
@@ -48,7 +51,7 @@ export const login = (username, password) => async (dispatch) => {
   const body = { username, password };
   try {
     const res = await api.post('/auth/login', body);
-    dispatch({ type: AUTH_SUCCESS, payload: res.data.user });
+    dispatch({ type: USER_LOADED, payload: res.data.user });
   } catch (err) {
     console.log(err);
     const errors = err.response.data.errors;

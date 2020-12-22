@@ -8,6 +8,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
+  sent: false,
   isAuthenticated: false,
   loading: true,
   user: null,
@@ -32,9 +33,7 @@ export default function (state = initialState, action) {
     case AUTH_SUCCESS:
       return {
         ...state,
-        isAuthenticated: true,
-        user: payload,
-        loading: false,
+        sent: true,
       };
     case AUTH_ERROR:
     case LOGOUT:

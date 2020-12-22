@@ -6,6 +6,10 @@ import './index.css';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+//Redux
+import { Provider } from 'react-redux';
+import store from './store';
+
 // layout
 import Container from './components/layout/Container';
 import Navbar from './components/layout/Navbar';
@@ -15,7 +19,7 @@ import Account from './components/auth/Account';
 
 const App = () => {
   return (
-    <Fragment>
+    <Provider store={store}>
       <Router>
         <Navbar />
         <Switch>
@@ -41,7 +45,7 @@ const App = () => {
           />
         </Switch>
       </Router>
-    </Fragment>
+    </Provider>
   );
 };
 

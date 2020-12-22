@@ -20,7 +20,7 @@ const Confirm = ({ match, confirmUser, isAuthenticated }) => {
         <div className='card-body text-center p-5'>
           <h2> Confirmation Completed</h2>
           <div>
-            now you can go and <Link to='/login'>Login</Link>
+            now you can go and <Link to='/account'>Login</Link>
           </div>
         </div>
       </div>

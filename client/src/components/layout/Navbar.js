@@ -4,7 +4,7 @@ import { isAuth, logout } from '../../actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Navbar = ({ isAuth, isAuthenticated, user, logout }) => {
+const Navbar = ({ isAuth, isAuthenticated, logout }) => {
   useEffect(() => {
     if (isAuthenticated === false) {
       isAuth();
@@ -27,12 +27,10 @@ const Navbar = ({ isAuth, isAuthenticated, user, logout }) => {
 Navbar.propTypes = {
   isAuth: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { isAuth, logout })(Navbar);

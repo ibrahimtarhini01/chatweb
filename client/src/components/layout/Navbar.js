@@ -12,14 +12,12 @@ const Navbar = ({ isAuth, isAuthenticated, logout }) => {
   }, [isAuth, isAuthenticated]);
   return (
     <div className='navbar sticky-top  navbar-expand-lg bg-black  '>
-      <div className='container-lg'>
-        <NavLink className='navbar-brand text-white pt-2 text-center  ' to='/'>
-          <img src='/chathub-brand.jpg' alt='brand' className='w-75 ' />
-        </NavLink>
-        <button className='btn-link btn' onClick={logout}>
-          logout
-        </button>
-      </div>
+      <NavLink
+        className='navbar-brand text-white pt-2 text-center w-100  '
+        to='/'
+      >
+        <img src='/chathub-brand.jpg' alt='brand' />
+      </NavLink>
     </div>
   );
 };

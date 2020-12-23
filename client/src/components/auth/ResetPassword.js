@@ -100,7 +100,9 @@ const ResetPassword = ({ match, resetPassword, reset }) => {
           ) : (
             <div className='text-center'>
               <h4>Your Password has been reset successfully</h4>
-              <Link to='/account'>Log In</Link>
+              <Link to='/account' className='text-muted'>
+                Log In
+              </Link>
             </div>
           )}
         </div>{' '}

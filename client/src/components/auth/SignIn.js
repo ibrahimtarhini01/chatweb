@@ -72,13 +72,11 @@ const SignIn = ({ login }) => {
           </div>
         </div>
 
-        <div className=''>
-          <Link className='text-muted' to='/reset'>
-            forgot Password?
-          </Link>
-        </div>
+        <Link className='text-muted' to='/reset'>
+          forgot Password?
+        </Link>
 
-        <div className='d-flex align-items-center mb-4'>
+        <div className='d-flex align-items-center mb-4 mt-2'>
           <button
             type='submit'
             className='btn bg-selected border-0 account-btn btn-block

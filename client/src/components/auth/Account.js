@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import SignIn from './SignIn';
 import Register from './Register';
+import Navbar from '../layout/Navbar';
 
 const Account = ({ isAuthenticated }) => {
   const [login, setLogin] = useState(true);
@@ -14,7 +15,8 @@ const Account = ({ isAuthenticated }) => {
 
   return (
     <div>
-      <div className='card text-white mb-3 bg-main rounded-0 account'>
+      <div className='card text-white mb-3 bg-main rounded-0 account border-0'>
+        <Navbar />
         {/**Header */}
         <div className='card-header d-flex flex-row p-0 mb-4 cursor-pointer'>
           <div

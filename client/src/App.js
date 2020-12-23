@@ -24,7 +24,6 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Navbar />
         <Switch>
           <Route
             exact

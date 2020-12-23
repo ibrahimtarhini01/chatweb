@@ -20,6 +20,9 @@ import Reset from './components/auth/Reset';
 import ResetPassword from './components/auth/ResetPassword';
 import Auth from './components/layout/Auth';
 
+// Dashboard
+import Dashboard from './components/dashboard/Dashboard';
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -49,6 +52,7 @@ const App = () => {
           <Route exact path='/reset' component={Reset} />
           <Route exact path='/reset/:token' component={ResetPassword} />
           <Route exact path='/confirm/:token' component={Confirm} />
+          <Route exact path='/dashboard' component={Dashboard} />
         </Switch>
       </Router>
     </Provider>

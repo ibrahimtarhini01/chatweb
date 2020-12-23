@@ -10,6 +10,7 @@ const {
   getCurrentUser,
   resetPasswordEmail,
   resetPassword,
+  changeProfilePic,
 } = require('../controllers/auth');
 const { protect } = require('../middleware/auth');
 const router = express.Router();
@@ -24,5 +25,6 @@ router.get('/confirmation/:token', confirmEmail);
 router.get('/me', getCurrentUser);
 router.post('/reset', resetPasswordEmail);
 router.post('/reset/:token', resetPassword);
+router.put('/profile', changeProfilePic);
 
 module.exports = router;

@@ -2,6 +2,7 @@ const User = require('../models/User');
 const passport = require('passport');
 const crypto = require('crypto');
 const sendEmail = require('../utils/sendEmail');
+const cloudinary = require('cloudinary').v2;
 
 // @route   POST /api/auth/register
 // @desc    Register User
@@ -236,5 +237,32 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+exports.changeProfilePic = async (req, res) => {
+  try {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+
+    console.log(req.body.image);
+
+    const uploadResponse = await cloudinary.uploader.upload(req.body.image, {
+      upload_preset: 'dev_setups',
+      public_id: `profile_${req.user.id}`,
+    });
+
+    await User.findByIdAndUpdate(req.user.id, {
+      avatar: uploadResponse.url.slice(47),
+    });
+    res.status(200).json({
+      success: true,
+      data: uploadResponse.url.slice(47),
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

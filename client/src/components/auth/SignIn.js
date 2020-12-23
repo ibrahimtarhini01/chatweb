@@ -3,6 +3,7 @@ import Alert from '../layout/Alert';
 import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const SignIn = ({ login }) => {
   const [formData, setFormData] = useState({
@@ -71,24 +72,10 @@ const SignIn = ({ login }) => {
           </div>
         </div>
 
-        <div className='d-flex align-items-center mb-4'>
-          <div className='form-inline flex-grow-1 text-muted mr-3 '>
-            <div className='form-check'>
-              <input
-                className='form-check-input'
-                type='checkbox'
-                id='gridCheck'
-              />
-              <label className='form-check-label' htmlFor='gridCheck'>
-                Keep me logged in
-              </label>
-            </div>
-          </div>
-          <div className=''>
-            <div className='text-muted' to='/account/reset'>
-              forgot Password?
-            </div>
-          </div>
+        <div className=''>
+          <Link className='text-muted' to='/account/reset'>
+            forgot Password?
+          </Link>
         </div>
 
         <div className='d-flex align-items-center mb-4'>

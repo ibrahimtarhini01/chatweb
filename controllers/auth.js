@@ -41,7 +41,7 @@ exports.register = async (req, res) => {
       message,
     });
 
-    res.status(200).json({ success: true, data: user });
+    res.status(200).json({ success: true });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error: 'Server Error' });
@@ -163,6 +163,75 @@ exports.deleteUser = async (req, res) => {
     req.logOut();
     await User.findByIdAndDelete(id);
 
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route POST /api/auth/reset
+// @desc Send Reset Password Link to Email
+// @access Public
+exports.resetPasswordEmail = async (req, res) => {
+  const { email } = req.body;
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'User does not exist' }] });
+    }
+    // Get reset token
+    const resetToken = user.getResetToken();
+    await user.save({ validateBeforeSave: false });
+    // Create reset URL
+    const resetUrl = `http://localhost:3000/reset/${resetToken}`;
+
+    console.log(resetUrl);
+
+    const message = `To reset your password click on this link : \n\n ${resetUrl}`;
+
+    await sendEmail({
+      email: email,
+      subject: 'Reset Password',
+      message,
+    });
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route   GET /api/auth/reset/:token
+// @desc    Reset Password using token
+// @access  public
+exports.resetPassword = async (req, res) => {
+  try {
+    // Get hashed token
+    const resetToken = crypto
+      .createHash('sha256')
+      .update(req.params.token)
+      .digest('hex');
+
+    const user = await User.findOne({
+      resetToken,
+      resetTokenExpire: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "User Doesn't exist" }] });
+    }
+
+    // update
+    user.password = req.body.password;
+    user.resetToken = undefined;
+    user.resetTokenExpire = undefined;
+    await user.save();
     res.status(200).json({ success: true });
   } catch (error) {
     console.log(error);

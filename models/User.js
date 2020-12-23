@@ -18,6 +18,9 @@ const user = new mongoose.Schema({
   verificationToken: String,
 
   verificationTokenExpire: Date,
+  resetToken: String,
+
+  resetTokenExpire: Date,
 
   verfied: {
     type: Boolean,
@@ -48,7 +51,7 @@ user.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Generate and hash password token
+// Generate and hash verify token
 user.methods.getConfirmationToken = function () {
   //Generate token
   const resetToken = crypto.randomBytes(20).toString('hex');
@@ -61,6 +64,23 @@ user.methods.getConfirmationToken = function () {
 
   // Set expire
   this.verificationTokenExpire = Date.now() + 10 * 60 * 10000;
+
+  return resetToken;
+};
+
+// Generate and hash reset token
+user.methods.getResetToken = function () {
+  //Generate token
+  const resetToken = crypto.randomBytes(20).toString('hex');
+
+  // Hash token and set to resetPasswordToken field
+  this.resetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  // Set expire
+  this.resetTokenExpire = Date.now() + 10 * 60 * 10000;
 
   return resetToken;
 };

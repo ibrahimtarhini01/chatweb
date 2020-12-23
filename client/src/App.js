@@ -17,6 +17,8 @@ import Navbar from './components/layout/Navbar';
 // Auth
 import Account from './components/auth/Account';
 import Confirm from './components/auth/Confirm';
+import Reset from './components/auth/Reset';
+import ResetPassword from './components/auth/ResetPassword';
 
 const App = () => {
   return (
@@ -44,6 +46,8 @@ const App = () => {
               />
             )}
           />
+          <Route exact path='/reset' component={Reset} />
+          <Route exact path='/reset/:token' component={ResetPassword} />
           <Route exact path='/confirm/:token' component={Confirm} />
         </Switch>
       </Router>

@@ -23,6 +23,6 @@ router.delete('/delete', deleteUser);
 router.get('/confirmation/:token', confirmEmail);
 router.get('/me', getCurrentUser);
 router.post('/reset', resetPasswordEmail);
-router.get('/reset/:token', resetPassword);
+router.post('/reset/:token', resetPassword);
 
 module.exports = router;

@@ -231,7 +231,7 @@ exports.resetPassword = async (req, res) => {
     user.password = req.body.password;
     user.resetToken = undefined;
     user.resetTokenExpire = undefined;
-    await user.save();
+    await user.save({ validateBeforeSave: false });
     res.status(200).json({ success: true });
   } catch (error) {
     console.log(error);

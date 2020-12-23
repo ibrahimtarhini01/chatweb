@@ -73,7 +73,7 @@ const SignIn = ({ login }) => {
         </div>
 
         <div className=''>
-          <Link className='text-muted' to='/account/reset'>
+          <Link className='text-muted' to='/reset'>
             forgot Password?
           </Link>
         </div>

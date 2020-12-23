@@ -1,4 +1,11 @@
-import { AUTH_SUCCESS, LOGOUT, USER_LOADED, AUTH_ERROR, AUTH } from './types';
+import {
+  AUTH_SUCCESS,
+  LOGOUT,
+  USER_LOADED,
+  AUTH_ERROR,
+  AUTH,
+  RESET_PASSWORD,
+} from './types';
 import api from '../utils/api';
 import { setAlert } from './alerts';
 
@@ -110,5 +117,30 @@ export const deleteUser = () => async (dispatch) => {
     dispatch({ type: LOGOUT });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const resetLink = (formData) => async (dispatch) => {
+  try {
+    await api.post('/auth/reset', formData);
+    dispatch(setAlert('A reset link was sent to your email', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.message, 'danger')));
+    }
+  }
+};
+export const resetPassword = (token, password) => async (dispatch) => {
+  try {
+    await api.post('/auth/reset/' + token, { password });
+    dispatch({ type: RESET_PASSWORD });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.message, 'danger')));
+    }
   }
 };

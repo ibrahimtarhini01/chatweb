@@ -5,9 +5,11 @@ import {
   AUTH_ERROR,
   USER_LOADED,
   AUTH,
+  RESET_PASSWORD,
 } from '../actions/types';
 
 const initialState = {
+  reset: false,
   sent: false,
   isAuthenticated: false,
   loading: true,
@@ -34,6 +36,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         sent: true,
+      };
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        reset: true,
       };
     case AUTH_ERROR:
     case LOGOUT:

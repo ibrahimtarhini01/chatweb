@@ -31,6 +31,11 @@ const user = new mongoose.Schema({
     required: [true, 'Please add a password'],
     minlength: 6,
   },
+
+  avatar: {
+    type: String,
+    default: 'v1608731788/images/defualt_kzmons.png',
+  },
   createdAt: {
     type: Date,
     default: Date.now,

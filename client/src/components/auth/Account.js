@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import SignIn from './SignIn';
 import Register from './Register';
-import Navbar from '../layout/Navbar';
 
 const Account = ({ isAuthenticated }) => {
   const [login, setLogin] = useState(true);
@@ -16,7 +15,11 @@ const Account = ({ isAuthenticated }) => {
   return (
     <div>
       <div className='card text-white mb-3 bg-main rounded-0 account border-0'>
-        <Navbar />
+        <div className='navbar sticky-top  navbar-expand-lg bg-black  '>
+          <div className='navbar-brand text-white pt-2 text-center w-100  '>
+            <img src='/chathub-brand.jpg' alt='brand' />
+          </div>
+        </div>
         {/**Header */}
         <div className='card-header d-flex flex-row p-0 mb-4 cursor-pointer'>
           <div

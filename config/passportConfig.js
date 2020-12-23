@@ -30,7 +30,7 @@ module.exports = function (passport) {
         username: user.username,
         email: user.email,
         createdAt: user.createdAt,
-        verified: user.verfied,
+        avatar: user.avatar,
       };
       cb(err, userInfo);
     });

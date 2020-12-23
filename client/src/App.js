@@ -12,18 +12,19 @@ import store from './store';
 
 // layout
 import Container from './components/layout/Container';
-import Navbar from './components/layout/Navbar';
 
 // Auth
 import Account from './components/auth/Account';
 import Confirm from './components/auth/Confirm';
 import Reset from './components/auth/Reset';
 import ResetPassword from './components/auth/ResetPassword';
+import Auth from './components/layout/Auth';
 
 const App = () => {
   return (
     <Provider store={store}>
       <Router>
+        <Auth />
         <Switch>
           <Route
             exact

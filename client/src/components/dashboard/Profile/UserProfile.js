@@ -27,7 +27,9 @@ const UserProfile = ({ open, setProfileOpen, user, updateUsername }) => {
       <div className='profile-inner px-3  '>
         <div className='d-flex justify-content-around w-100 py-4'>
           {' '}
-          <Avatar avatar={user.avatar} width='200' open={open} />
+          <div className='profile-avatar'>
+            <Avatar avatar={user.avatar} width='200' open={open} />
+          </div>
         </div>
         <div
           className={`teal text-left mx-4 ${

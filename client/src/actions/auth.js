@@ -149,7 +149,7 @@ export const resetPassword = (token, password) => async (dispatch) => {
 export const updateUsername = (username) => async (dispatch) => {
   try {
     await api.put('/auth/', { username });
-    dispatch(setAlert('Username Updated ', 'info'));
+    dispatch(setAlert('Username Updated ', 'success'));
     dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;

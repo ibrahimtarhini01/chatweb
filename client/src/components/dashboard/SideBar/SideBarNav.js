@@ -35,16 +35,16 @@ const SideBarNav = ({ user, setProfileOpen, logout }) => {
             aria-labelledby='dropdownMenuButton'
           >
             <Link className='dropdown-item text-white py-2' to='/'>
-              Add Room
+              <i className='fas fa-plus'></i> Add Room
             </Link>
             <Link className='dropdown-item text-white  py-2' to='/'>
-              Join Room
+              <i className='fas fa-user-plus'></i> Join Room
             </Link>
             <Link className='dropdown-item text-white  py-2' to='/'>
-              User Profile
+              <i className='fas fa-user'></i> User Profile
             </Link>
             <Link className='dropdown-item text-white  py-2' to='/'>
-              Settings
+              <i className='fas fa-cog'></i> Settings
             </Link>
             <Link
               className='dropdown-item text-white  py-2'
@@ -53,7 +53,7 @@ const SideBarNav = ({ user, setProfileOpen, logout }) => {
               }}
               to='/'
             >
-              Logout
+              <i className='fas fa-sign-out-alt'></i> Logout
             </Link>
           </div>
         </div>

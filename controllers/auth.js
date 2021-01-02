@@ -266,6 +266,34 @@ exports.changeProfilePic = async (req, res) => {
       data: uploadResponse.url.slice(47),
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route   PUT /api/auth
+// @desc    Change User username
+// @access  private
+exports.updateUsername = async (req, res) => {
+  const fieldsToUpdate = {
+    username: req.body.username,
+  };
+  try {
+    const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    if (error.codeName === 'DuplicateKey') {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'Username already exists' }] });
+    } else {
+      return res.status(500).json({ success: false, error: 'Server Error' });
+    }
   }
 };

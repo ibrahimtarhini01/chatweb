@@ -1,7 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logout } from '../../../actions/auth';
+import PropTypes from 'prop-types';
+
 import Avatar from '../../layout/Avatar';
-const SideBarNav = ({ user, setProfileOpen }) => {
+
+const SideBarNav = ({ user, setProfileOpen, logout }) => {
   return (
     <div className='sidebar-nav bg-main d-flex justify-content-between align-items-center'>
       <div
@@ -13,9 +18,9 @@ const SideBarNav = ({ user, setProfileOpen }) => {
       </div>
       <div>
         <button className='btn btn-link text-center menu rounded-circle text-muted '>
-          <i class='fas fa-user-plus'></i>
+          <i className='fas fa-user-plus'></i>
         </button>
-        <div class='dropdown d-inline '>
+        <div className='dropdown d-inline '>
           <button
             className='btn btn-link text-center menu rounded-circle text-muted '
             id='dropdownMenuButton'
@@ -23,25 +28,31 @@ const SideBarNav = ({ user, setProfileOpen }) => {
             aria-haspopup='true'
             aria-expanded='false'
           >
-            <i class='fas fa-ellipsis-v '></i>
+            <i className='fas fa-ellipsis-v '></i>
           </button>
           <div
-            class='dropdown-menu dropdown-menu-right border-0 shadow   bg-main text-white'
+            className='dropdown-menu dropdown-menu-right border-0 shadow   bg-main text-white'
             aria-labelledby='dropdownMenuButton'
           >
-            <Link class='dropdown-item text-white py-2' to='/'>
+            <Link className='dropdown-item text-white py-2' to='/'>
               Add Room
             </Link>
-            <Link class='dropdown-item text-white  py-2' to='/'>
+            <Link className='dropdown-item text-white  py-2' to='/'>
               Join Room
             </Link>
-            <Link class='dropdown-item text-white  py-2' to='/'>
+            <Link className='dropdown-item text-white  py-2' to='/'>
               User Profile
             </Link>
-            <Link class='dropdown-item text-white  py-2' to='/'>
+            <Link className='dropdown-item text-white  py-2' to='/'>
               Settings
             </Link>
-            <Link class='dropdown-item text-white  py-2' to='/'>
+            <Link
+              className='dropdown-item text-white  py-2'
+              onClick={() => {
+                logout();
+              }}
+              to='/'
+            >
               Logout
             </Link>
           </div>
@@ -51,4 +62,10 @@ const SideBarNav = ({ user, setProfileOpen }) => {
   );
 };
 
-export default SideBarNav;
+SideBarNav.propTypes = {
+  logout: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  setProfileOpen: PropTypes.func.isRequired,
+};
+
+export default connect(null, { logout })(SideBarNav);

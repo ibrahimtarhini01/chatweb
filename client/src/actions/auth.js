@@ -58,6 +58,7 @@ export const login = (username, password) => async (dispatch) => {
   const body = { username, password };
   try {
     const res = await api.post('/auth/login', body);
+
     dispatch({ type: USER_LOADED, payload: res.data.user });
   } catch (err) {
     console.log(err);

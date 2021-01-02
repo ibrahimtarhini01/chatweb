@@ -19,7 +19,7 @@ const UserProfile = ({ open, setProfileOpen, user, updateUsername }) => {
     >
       <div className='d-flex mt-5 align-items-center py-3'>
         <i
-          class='fas fa-arrow-left  mx-4'
+          className='fas fa-arrow-left  mx-4'
           onClick={() => setProfileOpen(false)}
         ></i>{' '}
         <h4 className='mb-0 '>Profile</h4>
@@ -70,9 +70,9 @@ const UserProfile = ({ open, setProfileOpen, user, updateUsername }) => {
                   }}
                 >
                   {edit ? (
-                    <i class='fas fa-check teal'></i>
+                    <i className='fas fa-check teal'></i>
                   ) : (
-                    <i class='fas fa-pen'></i>
+                    <i className='fas fa-pen'></i>
                   )}
                 </span>
               </div>

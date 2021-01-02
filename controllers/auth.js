@@ -101,6 +101,7 @@ exports.login = (req, res, next) => {
           username: user.username,
           email: user.email,
           createdAt: user.createdAt,
+          avatar: user.avatar,
         };
         res.status(200).json({ success: true, user: val });
       });

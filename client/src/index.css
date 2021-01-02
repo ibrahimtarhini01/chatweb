@@ -36,11 +36,14 @@ button:focus {
   background-color: #000;
 }
 .bg-main {
-  background-color: #2f3136;
+  background-color: #2a2f32;
 }
 
 .bg-selected {
   background-color: #292b2f;
+}
+.teal {
+  color: #009688;
 }
 /* custom */
 
@@ -51,18 +54,63 @@ button:focus {
 }
 
 .dashboard {
-  max-width: 90%;
-  min-height: 719px;
-  margin: 15px auto;
+  max-width: 100%;
+  min-height: 100%;
+  height: 100vh;
+  margin: 0;
 }
 
+/*Profile*/
+
+.profile {
+  position: absolute;
+  z-index: 10;
+  width: 30%;
+  left: -100%;
+  background-color: #323739;
+  color: white;
+  height: 100%;
+}
+
+.profile-animation-open {
+  animation: profile-open 0.5s ease-out forwards;
+}
+
+.profile-animation-close {
+  animation: profile-close 0.5s ease-in forwards;
+}
+
+.profile-inner {
+  width: 100%;
+  background-color: #131c21;
+  height: 100%;
+}
+
+@keyframes profile-open {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 0%;
+  }
+}
+@keyframes profile-close {
+  from {
+    left: 0%;
+  }
+  to {
+    left: -100%;
+  }
+}
 .sidebar {
   width: 30%;
+  background-color: #131c21;
 }
 
 .sidebar-nav {
   padding: 10px 16px;
   height: 59px;
+  background-color: #2a2f32;
 }
 
 .menu {
@@ -70,9 +118,12 @@ button:focus {
   width: 40px;
 }
 
-.menu:focus,
-.menu:active {
-  background-color: #202225;
+.menu:focus {
+  background-color: #262a2d;
+}
+
+.dropdown-item:hover {
+  background-color: #20272b !important;
 }
 
 @media (min-width: 600px) {
@@ -87,33 +138,27 @@ button:focus {
   }
 }
 
-@media (max-width: 1425px) {
-  .dashboard {
-    max-width: 100%;
-    min-height: 100%;
-    height: 100vh;
-    margin: 0;
-  }
-}
-
 @media (min-width: 576px) {
   .account-btn {
     width: 30% !important;
   }
 }
 @media (max-width: 1290px) {
-  .sidebar {
+  .sidebar,
+  .profile {
     width: 35%;
   }
 }
 
 @media (max-width: 1000px) {
-  .sidebar {
+  .sidebar,
+  .profile {
     width: 40%;
   }
 }
 @media (max-width: 800px) {
-  .sidebar {
+  .sidebar,
+  .profile {
     width: 100%;
   }
   .chat-desktop {

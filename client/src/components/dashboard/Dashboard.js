@@ -1,11 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from '../layout/Loading';
-import DashboardSideBar from './DashboardSideBar';
+import DashboardSideBar from './SideBar/DashboardSideBar';
+import UserProfile from './Profile/UserProfile';
 import { Redirect } from 'react-router-dom';
 
 const Dashboard = ({ isAuthenticated, user, loading }) => {
+  const [profileOpen, setProfileOpen] = useState(null);
+
   if (!isAuthenticated && !loading) {
     return <Redirect to='/account' />;
   }
@@ -15,8 +18,13 @@ const Dashboard = ({ isAuthenticated, user, loading }) => {
         <Loading />
       ) : (
         <div>
-          <div className='dashboard bg-main d-flex'>
-            <DashboardSideBar user={user} />
+          <div className='dashboard bg-main d-flex position-relative'>
+            <UserProfile
+              open={profileOpen}
+              setProfileOpen={setProfileOpen}
+              user={user}
+            />
+            <DashboardSideBar user={user} setProfileOpen={setProfileOpen} />
             <div className='chat-desktop'>1</div>
           </div>
         </div>

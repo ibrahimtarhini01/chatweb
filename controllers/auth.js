@@ -240,6 +240,9 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+// @route   PUT /api/auth/profile
+// @desc    Change Profile Pic
+// @access  private
 exports.changeProfilePic = async (req, res) => {
   try {
     cloudinary.config({

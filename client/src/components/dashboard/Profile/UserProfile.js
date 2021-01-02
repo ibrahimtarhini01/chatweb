@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { updateUsername } from '../../../actions/auth';
+import PropTypes from 'prop-types';
+
 import Avatar from '../../layout/Avatar';
-const UserProfile = ({ open, setProfileOpen, user }) => {
+import Alert from '../../layout/Alert';
+
+const UserProfile = ({ open, setProfileOpen, user, updateUsername }) => {
   const [username, setUsername] = useState(user.username);
 
-  const [edit, setEdit] = useState(true);
+  const [edit, setEdit] = useState(false);
 
   return (
     <div
@@ -25,13 +31,14 @@ const UserProfile = ({ open, setProfileOpen, user }) => {
         </div>
         <div
           className={`teal text-left mx-4 ${
-            !edit ? 'border-bottom border-teal' : ''
+            edit ? 'border-bottom border-teal' : ''
           } `}
         >
+          <Alert />
           <label htmlFor='username'>Your Name</label>
           <div className='form-inline  bg-transparent'>
             <div className='input-group w-100 bg-transparent'>
-              {edit ? (
+              {!edit ? (
                 <input
                   disabled
                   type='text'
@@ -55,9 +62,14 @@ const UserProfile = ({ open, setProfileOpen, user }) => {
                 <span
                   className='input-group-text border-0 cursor-pointer bg-transparent '
                   id='inputGroupFileAddon01'
-                  onClick={() => setEdit(!edit)}
+                  onClick={() => {
+                    if (edit && username !== user.username) {
+                      updateUsername(username);
+                    }
+                    setEdit(!edit);
+                  }}
                 >
-                  {!edit ? (
+                  {edit ? (
                     <i class='fas fa-check teal'></i>
                   ) : (
                     <i class='fas fa-pen'></i>
@@ -72,4 +84,11 @@ const UserProfile = ({ open, setProfileOpen, user }) => {
   );
 };
 
-export default UserProfile;
+UserProfile.propTypes = {
+  open: PropTypes.bool,
+  setProfileOpen: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  updateUsername: PropTypes.func.isRequired,
+};
+
+export default connect(null, { updateUsername })(UserProfile);

@@ -64,6 +64,21 @@ button:focus {
   margin: 0;
 }
 
+/*Avatar*/
+
+.avatar-animation-open {
+  animation: avatar-open 1.2s linear forwards;
+}
+
+@keyframes avatar-open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /*SideBar*/
 
 .sidebar {

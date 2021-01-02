@@ -14,7 +14,7 @@ const SideBarNav = ({ user, setProfileOpen, logout }) => {
           setProfileOpen(true);
         }}
       >
-        <Avatar avatar={user.avatar} width='40' />
+        <Avatar avatar={user.avatar} width='40' edit={false} />
       </div>
       <div>
         <button className='btn btn-link text-center menu rounded-circle text-muted '>

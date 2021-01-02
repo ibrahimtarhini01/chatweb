@@ -132,7 +132,51 @@ button:focus {
   height: 100%;
 }
 
+.profile-avatar:hover > div {
+  cursor: pointer;
+  animation: profile-hover-fade-in 0.3s ease-in forwards;
+  filter: brightness(1);
+}
+.profile-avatar p {
+  filter: opacity(0);
+}
+
+.profile-avatar:hover > p {
+  animation: profile-hover-text 0.3s ease-in forwards;
+}
+
+.profile-avatar-upload {
+  border-radius: 50%;
+  opacity: 0;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 200px;
+}
+
+.profile-avatar-upload:hover {
+  cursor: pointer;
+}
+
 /* Profile animation*/
+
+@keyframes profile-hover-fade-in {
+  from {
+    filter: brightness(1);
+  }
+  to {
+    filter: brightness(0.4);
+  }
+}
+
+@keyframes profile-hover-text {
+  from {
+    filter: opacity(0);
+  }
+  to {
+    filter: opacity(1);
+  }
+}
 
 @keyframes profile-open {
   from {

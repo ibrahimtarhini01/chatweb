@@ -3,7 +3,7 @@ import Avatar from '../../layout/Avatar';
 const UserProfile = ({ open, setProfileOpen, user }) => {
   const [username, setUsername] = useState(user.username);
 
-  const [hidden, setHidden] = useState(true);
+  const [edit, setEdit] = useState(true);
 
   return (
     <div
@@ -23,26 +23,42 @@ const UserProfile = ({ open, setProfileOpen, user }) => {
           {' '}
           <Avatar avatar={user.avatar} width='200' />
         </div>
-        <div className='teal text-left mx-4'>
+        <div
+          className={`teal text-left mx-4 ${
+            !edit ? 'border-bottom border-teal' : ''
+          } `}
+        >
           <label htmlFor='username'>Your Name</label>
-          <div className='form-inline mb-4 bg-transparent'>
+          <div className='form-inline  bg-transparent'>
             <div className='input-group w-100 bg-transparent'>
-              <input
-                type='text'
-                className='form-control rounded-0  text-white bg-transparent border-0 '
-                id='username'
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />{' '}
+              {edit ? (
+                <input
+                  disabled
+                  type='text'
+                  className='form-control rounded-0  text-white bg-transparent border-0 '
+                  id='username'
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              ) : (
+                <input
+                  type='text'
+                  className='form-control rounded-0  text-white bg-transparent border-0 '
+                  id='username'
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              )}
               <div className='input-group-prepend bg-transparent border-0'>
                 <span
                   className='input-group-text border-0 cursor-pointer bg-transparent '
                   id='inputGroupFileAddon01'
-                  onClick={() => setHidden(!hidden)}
+                  onClick={() => setEdit(!edit)}
                 >
-                  {!hidden ? (
-                    <i className='far fa-eye-slash'></i>
+                  {!edit ? (
+                    <i class='fas fa-check teal'></i>
                   ) : (
                     <i class='fas fa-pen'></i>
                   )}

@@ -252,8 +252,6 @@ exports.changeProfilePic = async (req, res) => {
       api_secret: process.env.CLOUDINARY_API_SECRET,
     });
 
-    console.log(req.body.image);
-
     const uploadResponse = await cloudinary.uploader.upload(req.body.image, {
       upload_preset: 'dev_setups',
       public_id: `profile_${req.user.id}`,

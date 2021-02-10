@@ -10,6 +10,10 @@ const UserProfile = ({ open, setProfileOpen, user, updateUsername }) => {
   const [username, setUsername] = useState(user.username);
 
   const [edit, setEdit] = useState(false);
+  const [profileEdit, setProfileEdit] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [cancel, setCancel] = useState(false);
+  const [selected, setSelected] = useState(false);
 
   return (
     <div
@@ -24,19 +28,51 @@ const UserProfile = ({ open, setProfileOpen, user, updateUsername }) => {
         ></i>{' '}
         <h4 className='mb-0 '>Profile</h4>
       </div>
-      <div className='profile-inner px-3  '>
+      <div className='profile-inner px-3  pt-3 '>
+        <div className='mt-2'>
+          <Alert />
+        </div>
         <div className='d-flex justify-content-around w-100 py-4'>
-          {' '}
           <div className='profile-avatar text-center'>
-            <Avatar avatar={user.avatar} width='200' open={open} edit={true} />
+            <Avatar
+              avatar={user.avatar}
+              width='200'
+              open={open}
+              edit={true}
+              cancel={cancel}
+              confirm={confirm}
+              setSelected={setSelected}
+              setCancel={setCancel}
+              setConfirm={setConfirm}
+            />
           </div>
         </div>
+        {selected && (
+          <div className='d-flex justify-content-around'>
+            <div
+              className='rounded-circle bg-success btn text-white btn-profile '
+              onClick={() => {
+                setConfirm(true);
+                setProfileOpen(false);
+              }}
+            >
+              <i class='fas fa-check'></i>
+            </div>
+            <div
+              className='rounded-circle bg-danger btn text-white btn-profile '
+              onClick={() => {
+                setCancel(true);
+              }}
+            >
+              <i class='fas fa-times'></i>
+            </div>
+          </div>
+        )}
         <div
           className={`teal text-left mx-4 ${
             edit ? 'border-bottom border-teal' : ''
           } `}
         >
-          <Alert />
           <label htmlFor='username'>Your Name</label>
           <div className='form-inline  bg-transparent'>
             <div className='input-group w-100 bg-transparent'>

@@ -159,3 +159,16 @@ export const updateUsername = (username) => async (dispatch) => {
     }
   }
 };
+
+export const updateProfilePic = (image) => async (dispatch) => {
+  try {
+    await api.put('/auth/profile', image);
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.message, 'danger')));
+    }
+  }
+};

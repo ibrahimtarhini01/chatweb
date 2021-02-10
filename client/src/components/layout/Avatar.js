@@ -74,7 +74,7 @@ const Avatar = ({
   return (
     <div
       style={{ width: width + 'px', minHeight: width + 'px' }}
-      className='position-relative'
+      className='position-relative cursor-pointer'
     >
       {edit && (
         <input

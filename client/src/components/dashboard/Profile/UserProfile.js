@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { updateUsername } from '../../../actions/auth';
+import { updateUsername, resetLink } from '../../../actions/auth';
 import PropTypes from 'prop-types';
 
 import Avatar from '../../layout/Avatar';
 import Alert from '../../layout/Alert';
 
-const UserProfile = ({ open, setProfileOpen, user, updateUsername }) => {
+const UserProfile = ({
+  open,
+  setProfileOpen,
+  user,
+  updateUsername,
+  resetLink,
+}) => {
   const [username, setUsername] = useState(user.username);
 
   const [edit, setEdit] = useState(false);
-  const [profileEdit, setProfileEdit] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
   const [selected, setSelected] = useState(false);
@@ -23,7 +28,7 @@ const UserProfile = ({ open, setProfileOpen, user, updateUsername }) => {
     >
       <div className='d-flex mt-5 align-items-center py-3'>
         <i
-          className='fas fa-arrow-left  mx-4'
+          className='fas fa-arrow-left  mx-4 cursor-pointer'
           onClick={() => setProfileOpen(false)}
         ></i>{' '}
         <h4 className='mb-0 '>Profile</h4>
@@ -117,6 +122,23 @@ const UserProfile = ({ open, setProfileOpen, user, updateUsername }) => {
             </div>
           </div>
         </div>
+        <div
+          className={`teal text-left mx-4 my-4 ${
+            edit ? 'border-bottom border-teal' : ''
+          } `}
+        >
+          <p>Change Password</p>
+          <div className='d-flex w-100 '>
+            <div
+              className='ml-auto bg-teal text-white btn teal-hover'
+              onClick={() => {
+                resetLink({ email: user.email });
+              }}
+            >
+              Send Link
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -127,6 +149,7 @@ UserProfile.propTypes = {
   setProfileOpen: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   updateUsername: PropTypes.func.isRequired,
+  resetLink: PropTypes.func.isRequired,
 };
 
-export default connect(null, { updateUsername })(UserProfile);
+export default connect(null, { updateUsername, resetLink })(UserProfile);

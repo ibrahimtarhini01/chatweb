@@ -163,6 +163,7 @@ export const updateUsername = (username) => async (dispatch) => {
 export const updateProfilePic = (image) => async (dispatch) => {
   try {
     await api.put('/auth/profile', image);
+    dispatch(setAlert('Profile Updated ', 'success'));
     dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;

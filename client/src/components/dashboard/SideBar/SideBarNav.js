@@ -37,30 +37,32 @@ const SideBarNav = ({ user, setProfileOpen, logout }) => {
             <i className='fas fa-ellipsis-v '></i>
           </button>
           <div
-            className='dropdown-menu dropdown-menu-right border-0 shadow   bg-main text-white'
+            className='dropdown-menu dropdown-menu-right border-0 shadow cursor-pointer  bg-main text-white'
             aria-labelledby='dropdownMenuButton'
           >
-            <Link className='dropdown-item text-white py-2' to='/'>
+            <div className='dropdown-item text-white py-2 '>
               <i className='fas fa-plus'></i> Add Room
-            </Link>
-            <Link className='dropdown-item text-white  py-2' to='/'>
+            </div>
+            <div className='dropdown-item text-white  py-2'>
               <i className='fas fa-user-plus'></i> Join Room
-            </Link>
-            <Link className='dropdown-item text-white  py-2' to='/'>
+            </div>
+            <div
+              className='dropdown-item text-white  py-2'
+              onClick={() => {
+                setProfileOpen(true);
+              }}
+            >
               <i className='fas fa-user'></i> User Profile
-            </Link>
-            <Link className='dropdown-item text-white  py-2' to='/'>
-              <i className='fas fa-cog'></i> Settings
-            </Link>
-            <Link
+            </div>
+
+            <div
               className='dropdown-item text-white  py-2'
               onClick={() => {
                 logout();
               }}
-              to='/'
             >
               <i className='fas fa-sign-out-alt'></i> Logout
-            </Link>
+            </div>
           </div>
         </div>
       </div>

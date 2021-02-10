@@ -51,6 +51,14 @@ button:focus {
 .border-teal {
   border-color: #009688 !important;
 }
+
+.bg-teal {
+  background-color: #009688;
+}
+
+.teal-hover:hover {
+  background-color: #013833;
+}
 /* custom */
 
 .loading {
@@ -66,6 +74,9 @@ button:focus {
   margin: 0;
 }
 
+.cursor-pointer:hover {
+  cursor: pointer;
+}
 /*Avatar*/
 
 .avatar-animation-open {
@@ -106,6 +117,9 @@ button:focus {
 
 .dropdown-item:hover {
   background-color: #20272b !important;
+}
+.underline:hover {
+  text-decoration: underline;
 }
 
 /*Profile*/

@@ -5,8 +5,8 @@ const UserRooms = () => {
   const [input, setInput] = useState('');
   return (
     <div>
-      <div className='search-room border-bottom border-dark py-2 px-4  '>
-        <div className='form-inline w-100 bg-main border-0 rounded-pill '>
+      <div className=' border-bottom border-dark py-2 px-4  '>
+        <div className='form-inline w-100 bg-input border-0 rounded-pill '>
           <div className='d-flex w-100'>
             <button className='search btn text-muted d-flex text-center align-items-center justify-content-around'>
               <i class='fas fa-search'></i>

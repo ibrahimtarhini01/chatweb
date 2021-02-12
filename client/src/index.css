@@ -274,6 +274,10 @@ button:focus {
 }
 
 /*Search input rooms*/
+
+.bg-input {
+  background-color: #33383b;
+}
 .search {
   width: 20% !important;
 }
@@ -350,4 +354,67 @@ button:focus {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/*Chat Room*/
+.chat-desktop {
+  background-color: #0d1418;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.chatroom-nav {
+  padding: 10px 16px;
+  height: 59px;
+  background-color: #2a2f32;
+
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(var(0, 0, 0, 0.4));
+}
+
+.chatroom-nav-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  min-width: 0;
+}
+
+.chatroom-nav-title {
+  display: flex;
+  align-items: flex-start;
+  line-height: normal;
+}
+
+.chatroom-nav-message {
+  min-height: 20px;
+  font-size: 13px;
+  line-height: 20px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.chatroom-nav-text {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 100%;
+}
+
+/*Chatroom footer*/
+.chatroom-footer {
+  padding: 10px 16px;
+  height: 59px;
+  background-color: #1e2428;
+
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(var(0, 0, 0, 0.4));
 }

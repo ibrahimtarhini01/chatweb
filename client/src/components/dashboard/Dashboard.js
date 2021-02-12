@@ -5,6 +5,7 @@ import Loading from '../layout/Loading';
 import DashboardSideBar from './SideBar/DashboardSideBar';
 import UserProfile from './Profile/UserProfile';
 import { Redirect } from 'react-router-dom';
+import ChatRoom from './Chat/ChatRoom';
 
 const Dashboard = ({ isAuthenticated, user, loading }) => {
   const [profileOpen, setProfileOpen] = useState(null);
@@ -25,7 +26,7 @@ const Dashboard = ({ isAuthenticated, user, loading }) => {
               user={user}
             />
             <DashboardSideBar user={user} setProfileOpen={setProfileOpen} />
-            <div className='chat-desktop'>1</div>
+            <ChatRoom user={user} />
           </div>
         </div>
       )}

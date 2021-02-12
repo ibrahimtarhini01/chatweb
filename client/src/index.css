@@ -1,3 +1,8 @@
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsla(0, 0%, 100%, 0.16) transparent;
+}
+
 *,
 ::before,
 ::after {
@@ -5,10 +10,17 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #394145;
+}
+
 body {
-  background-image: url('https://www.transparenttextures.com/patterns/black-twill.png');
   background-color: #202225;
-  color: #dcddde;
+  color: #d4d5d7;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -26,6 +38,10 @@ body {
 .form-control:focus {
   border: none;
   box-shadow: none;
+}
+
+.secondary {
+  color: rgba(241, 241, 242, 0.63) !important;
 }
 
 button:focus {
@@ -146,7 +162,7 @@ button:focus {
 .profile-inner {
   width: 100%;
   background-color: #131c21;
-  height: 641.6px;
+  height: 611.6px;
 }
 
 .profile-avatar:hover > div {
@@ -255,4 +271,83 @@ button:focus {
   .chat-desktop {
     display: none;
   }
+}
+
+/*Search input rooms*/
+.search {
+  width: 20% !important;
+}
+
+.rooms {
+  height: 606.6px;
+}
+
+.sidebar-room-image {
+  width: 73px;
+  padding: 0 15px 0 13px;
+  height: 77px;
+  line-height: 77px;
+}
+
+.sidebar-room:hover {
+  cursor: pointer;
+  background-color: #323739;
+}
+
+.sidebar-room-info {
+  padding-right: 15px;
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  min-width: 0;
+}
+
+.sidebar-room-info-top {
+  display: flex;
+  align-items: center;
+  line-height: normal;
+}
+
+.sidebar-room-title {
+  position: relative;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(241, 241, 242, 0.92);
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.sidebar-room-time {
+  overflow: hidden;
+  line-height: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: none;
+  max-width: 100%;
+  font-size: 12px;
+}
+
+.sidebar-room-message {
+  display: flex;
+  align-items: flex-start;
+  min-height: 20px;
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 2px;
+}
+
+.sidebar-room-user {
+  display: inline-block;
+}
+
+.sidebar-room-text {
+  position: relative;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

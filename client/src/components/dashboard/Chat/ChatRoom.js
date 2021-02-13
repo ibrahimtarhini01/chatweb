@@ -1,6 +1,7 @@
 import React from 'react';
 import ChatRoomFooter from './ChatRoomFooter';
 import ChatRoomHeader from './ChatRoomHeader';
+import ChatRoomMessages from './ChatRoomMessages';
 
 const ChatRoom = ({ user }) => {
   return (
@@ -16,6 +17,7 @@ const ChatRoom = ({ user }) => {
         }}
       ></div>
       <ChatRoomHeader user={user} />
+      <ChatRoomMessages />
       <ChatRoomFooter />
     </div>
   );

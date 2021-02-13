@@ -2,7 +2,7 @@ import React from 'react';
 
 const ChatRoomHeader = ({ user }) => {
   return (
-    <div className='chatroom-nav bg-main d-flex  align-items-center '>
+    <div className='chatroom-nav  bg-main d-flex  align-items-center '>
       <div className='mr-2'>
         <div className=''>
           <img

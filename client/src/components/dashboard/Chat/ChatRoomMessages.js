@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getChats, afterPostMessage } from '../../../actions/chat';
 import ChatRoomMessage from './ChatRoomMessage';
 
-const ChatRoomMessages = () => {
+const ChatRoomMessages = ({ getChats, afterPostMessage, chats }) => {
+  useEffect(() => {
+    if (chats === null) {
+      getChats();
+    }
+  }, [getChats]);
   return (
     <div className='chatroom-container d-flex flex-column'>
       <ChatRoomMessage
@@ -63,5 +70,9 @@ const ChatRoomMessages = () => {
     </div>
   );
 };
-
-export default ChatRoomMessages;
+const mapStateToProps = (state) => ({
+  chats: state.chat.chats,
+});
+export default connect(mapStateToProps, { getChats, afterPostMessage })(
+  ChatRoomMessages,
+);

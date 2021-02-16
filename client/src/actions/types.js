@@ -10,3 +10,7 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 // Alerts
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
+
+// Chat
+export const GET_CHAT = 'GET_CHAT';
+export const AFTER_POST_MESSAGE = 'AFTER_POST_MESSAGE';

@@ -1,9 +1,22 @@
-import React from 'react';
-
-const ChatRoomFooter = () => {
+import React, { useState } from 'react';
+import { moment } from 'moment';
+const ChatRoomFooter = ({ user }) => {
+  const [message, setMessage] = useState('');
   return (
     <div className='chatroom-footer'>
-      <div className='form-inline w-100 border-0 rounded-pill '>
+      <form
+        className='form-inline w-100 border-0 rounded-pill '
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          let chatMessage = message;
+          let userId = user.id;
+          let userName = user.username;
+          let nowTime = moment();
+
+          setMessage('');
+        }}
+      >
         <div className='d-flex w-100 '>
           <div className='input-group  bg-input w-100 rounded-pill  border-0 '>
             <input
@@ -11,6 +24,8 @@ const ChatRoomFooter = () => {
               className='form-control bg-transparent text-white w-100 mx-2  border-0 '
               id='message'
               placeholder='Type a message'
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             />
           </div>
           <button className='text-white btn p-0 ml-3'>
@@ -27,7 +42,7 @@ const ChatRoomFooter = () => {
             </svg>
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

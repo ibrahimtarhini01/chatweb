@@ -9,7 +9,7 @@ const UserRooms = () => {
         <div className='form-inline w-100 bg-input border-0 rounded-pill '>
           <div className='d-flex w-100'>
             <button className='search btn text-muted d-flex text-center align-items-center justify-content-around'>
-              <i class='fas fa-search'></i>
+              <i className='fas fa-search'></i>
             </button>
             <div className='input-group  bg-transparent  border-0 w-50'>
               <input

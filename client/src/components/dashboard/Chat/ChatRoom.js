@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
+import { connect } from 'react-redux';
+import { getChats, afterPostMessage } from '../../../actions/chat';
 import ChatRoomFooter from './ChatRoomFooter';
 import ChatRoomHeader from './ChatRoomHeader';
 import ChatRoomMessages from './ChatRoomMessages';
 
-const ChatRoom = ({ user }) => {
+const ChatRoom = ({ user, getChats, afterPostMessage }) => {
   return (
     <div className='chat-desktop'>
       <div
@@ -18,9 +21,9 @@ const ChatRoom = ({ user }) => {
       ></div>
       <ChatRoomHeader user={user} />
       <ChatRoomMessages />
-      <ChatRoomFooter />
+      <ChatRoomFooter user={user} />
     </div>
   );
 };
 
-export default ChatRoom;
+export default connect(null, { getChats, afterPostMessage })(ChatRoom);

@@ -5,14 +5,40 @@ const room = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a title'],
   },
-  admin: {
-    type: [mongoose.Types.ObjectId],
-    ref: 'User',
+  description: {
+    type: String,
+    minlength: 1,
+    maxlength: 256,
+    required: [true, 'Please add a description'],
   },
-  members: {
-    type: [mongoose.Types.ObjectId],
-    ref: 'User',
-  },
+  admin: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+      },
+      avatar: {
+        type: String,
+      },
+      username: {
+        type: String,
+      },
+    },
+  ],
+  members: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+      },
+      avatar: {
+        type: String,
+      },
+      username: {
+        type: String,
+      },
+    },
+  ],
   password: {
     type: String,
     minlength: 6,

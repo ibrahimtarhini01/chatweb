@@ -100,9 +100,11 @@ require('./config/passportConfig')(passport);
 //Routes
 const auth = require('./routes/auth');
 const chat = require('./routes/chat');
+const room = require('./routes/room');
 //Mount Routes
 app.use('/api/auth', auth);
 app.use('/api/chat', chat);
+app.use('/api/room', room);
 
 const Chat = require('./models/Chat');
 io.on('connection', (socket) => {

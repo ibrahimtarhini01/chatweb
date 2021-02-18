@@ -285,7 +285,7 @@ exports.addUser = async (req, res) => {
 };
 
 // @route   PUT /api/room/:id
-// @desc    leave group
+// @desc    update group info
 // @access  private
 exports.updateInfo = async (req, res) => {
   try {
@@ -294,8 +294,41 @@ exports.updateInfo = async (req, res) => {
       return res
         .status(400)
         .json({ errors: [{ message: "Room doesn't exist" }] });
+    } else if (!exists(room.admin, req.user.id)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'User not authorized' }] });
     }
 
+    const fieldsToUpdate = {
+      title: req.body.title,
+      description: req.body.description,
+    };
+
+    await room.update(fieldsToUpdate, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route   PUT /api/room/avatar/:id
+// @desc    update room avatar
+// @access  private
+exports.updateAvatar = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id);
+    if (!room) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "Room doesn't exist" }] });
+    }
     res.status(200).json({ success: true, data: room });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server Error' });

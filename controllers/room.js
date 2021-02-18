@@ -110,7 +110,7 @@ exports.joinRoom = async (req, res) => {
   }
 };
 
-// @route   GET /api/room/admin/:id
+// @route   POST /api/room/admin/:id
 // @desc    make user admin
 // @access  private
 exports.makeAdmin = async (req, res) => {
@@ -152,6 +152,152 @@ exports.makeAdmin = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route   POST /api/room/leave/:id
+// @desc    leave group
+// @access  private
+exports.leaveGroup = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id);
+    if (!room) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "Room doesn't exist" }] });
+    } else if (!exists(room.members, req.user.id)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'User not a member' }] });
+    }
+
+    let fieldsToUpdate = {
+      members: room.members.filter((member) => {
+        return member.user + '' !== req.user.id + '';
+      }),
+      admin: room.admin.filter((member) => {
+        return member.user + '' !== req.user.id + '';
+      }),
+    };
+    console.log(fieldsToUpdate);
+    if (fieldsToUpdate.members[0] === null) {
+      fieldsToUpdate.members = [];
+      fieldsToUpdate.admin = [];
+    }
+    await room.update(fieldsToUpdate, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route   POST /api/room/kick/:id
+// @desc    leave group
+// @access  private
+exports.kick = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id);
+    if (!room) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "Room doesn't exist" }] });
+    } else if (!exists(room.admin, req.user.id)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'User not authorized' }] });
+    }
+
+    let fieldsToUpdate = {
+      members: room.members.filter((member) => {
+        return member.user + '' !== req.body.user + '';
+      }),
+      admin: room.admin.filter((member) => {
+        return member.user + '' !== req.body.user + '';
+      }),
+    };
+    console.log(fieldsToUpdate);
+    if (fieldsToUpdate.members[0] === null) {
+      fieldsToUpdate.members = [];
+      fieldsToUpdate.admin = [];
+    }
+    await room.update(fieldsToUpdate, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route   GET /api/room/add/:id
+// @desc    Join Room
+// @access  private
+exports.addUser = async (req, res) => {
+  try {
+    let room = await Room.findById(req.params.id);
+    if (!room) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "Room doesn't exist" }] });
+    } else if (exists(room.members, req.body.id)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'User already a member' }] });
+    } else if (!exists(room.admin, req.user.id)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'User not authorized' }] });
+    }
+
+    const fieldsToUpdate = {
+      members: [
+        {
+          user: req.body.id,
+          username: req.body.username,
+          avatar: req.body.avatar,
+        },
+        ...room.members,
+      ],
+    };
+
+    await room.update(fieldsToUpdate, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route   PUT /api/room/:id
+// @desc    leave group
+// @access  private
+exports.updateInfo = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id);
+    if (!room) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "Room doesn't exist" }] });
+    }
+
+    res.status(200).json({ success: true, data: room });
+  } catch (error) {
     res.status(500).json({ success: false, error: 'Server Error' });
   }
 };

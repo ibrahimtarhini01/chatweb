@@ -70,7 +70,7 @@ exports.getRoom = async (req, res) => {
   }
 };
 
-// @route   POST /api/room/join/:id
+// @route   GET /api/room/join/:id
 // @desc    Join Room
 // @access  private
 exports.joinRoom = async (req, res) => {
@@ -80,7 +80,7 @@ exports.joinRoom = async (req, res) => {
       return res
         .status(400)
         .json({ errors: [{ message: "Room doesn't exist" }] });
-    } else if (member(room.members, req.user.id)) {
+    } else if (exists(room.members, req.user.id)) {
       return res
         .status(400)
         .json({ errors: [{ message: 'You are already a member' }] });
@@ -110,7 +110,53 @@ exports.joinRoom = async (req, res) => {
   }
 };
 
-const member = (group, user) => {
+// @route   GET /api/room/admin/:id
+// @desc    make user admin
+// @access  private
+exports.makeAdmin = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id);
+    if (!room) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "Room doesn't exist" }] });
+    } else if (!exists(room.admin, req.user.id)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'You are not authorized' }] });
+    } else if (!exists(room.members, req.body.user)) {
+      return res.status(400).json({ errors: [{ message: 'User not found' }] });
+    } else if (exists(room.admin, req.body.user)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'User already an admin' }] });
+    }
+    const fieldsToUpdate = {
+      admin: [
+        {
+          user: req.body.user,
+          username: req.body.username,
+          avatar: req.body.avatar,
+        },
+        ...room.admin,
+      ],
+    };
+
+    await room.update(fieldsToUpdate, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+const exists = (group, user) => {
   let bool = false;
   group.map((member) => {
     if (member.user + '' === user + '') bool = true;

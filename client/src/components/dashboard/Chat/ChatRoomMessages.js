@@ -6,7 +6,7 @@ import ChatRoomMessage from './ChatRoomMessage';
 const ChatRoomMessages = ({ getChats, afterPostMessage, chats }) => {
   useEffect(() => {
     if (chats === null) {
-      getChats();
+      //getChats();
     }
   }, [getChats]);
   return (

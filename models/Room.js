@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const room = new mongoose.Schema({
   title: {
     type: String,
@@ -52,5 +53,19 @@ const room = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+// Encrypt password using bcrypt
+room.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+// Match room entered password to hashed password on database
+room.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 module.exports = mongoose.model('Room', room);

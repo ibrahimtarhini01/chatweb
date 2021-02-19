@@ -328,8 +328,35 @@ exports.updateAvatar = async (req, res) => {
       return res
         .status(400)
         .json({ errors: [{ message: "Room doesn't exist" }] });
+    } else if (!exists(room.admin, req.user.id)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'User not authorized' }] });
     }
-    res.status(200).json({ success: true, data: room });
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+
+    const uploadResponse = await cloudinary.uploader.upload(req.body.image, {
+      upload_preset: 'dev_setups',
+      public_id: `room_${room.id}`,
+    });
+
+    await room.update(
+      {
+        avatar: uploadResponse.url.slice(47),
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+    res.status(200).json({
+      success: true,
+      data: uploadResponse.url.slice(47),
+    });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server Error' });
   }

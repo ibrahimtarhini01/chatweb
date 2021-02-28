@@ -26,7 +26,12 @@ const SideBarNav = ({ user, setProfileOpen, logout }) => {
           />
         </div>
         <div>
-          <button className='btn btn-link text-center menu rounded-circle text-muted '>
+          <button
+            className='btn btn-link text-center menu rounded-circle text-muted '
+            onClick={() => {
+              $('#addRoom').modal('show');
+            }}
+          >
             <i className='fas fa-user-plus'></i>
           </button>
           <div className='dropdown d-inline '>
@@ -80,7 +85,7 @@ const SideBarNav = ({ user, setProfileOpen, logout }) => {
           </div>
         </div>
       </div>
-      <Modal id='addRoom' Component={() => <AddRoom />} />
+      <Modal id='addRoom' Component={() => <AddRoom user={user} />} />
       <Modal
         id='joinRoom'
         Component={() => (

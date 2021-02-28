@@ -72,13 +72,32 @@ exports.createRoom = async (req, res) => {
 // @access  private
 exports.getRoom = async (req, res) => {
   try {
-    const room = await Room.findById(req.params.id);
+    const room = await Room.findById(req.params.id).select('-password');
     if (!room) {
       return res
         .status(400)
         .json({ errors: [{ message: "Room doesn't exist" }] });
     }
     res.status(200).json({ success: true, data: room });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route   GET /api/room/
+// @desc    GET user's rooms
+// @access  private
+exports.getUserRooms = async (req, res) => {
+  try {
+    console.log(req.user.rooms);
+    const rooms = await Room.find({ _id: { $in: req.user.rooms } }).select(
+      '-password',
+    );
+    console.log(rooms);
+    res.status(200).json({
+      success: true,
+      data: rooms,
+    });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server Error' });
   }
@@ -224,6 +243,20 @@ exports.leaveGroup = async (req, res) => {
       runValidators: true,
     });
 
+    fieldsToUpdate = {
+      rooms: req.user.rooms.filter((r) => {
+        return room.id + '' !== r + '';
+      }),
+    };
+    if (fieldsToUpdate.rooms[0] === null) {
+      fieldsToUpdate.rooms = [];
+    }
+
+    await User.findByIdAndUpdate(fieldsToUpdate, {
+      new: true,
+      runValidators: true,
+    });
+
     res.status(200).json({
       success: true,
     });
@@ -266,10 +299,27 @@ exports.kick = async (req, res) => {
       runValidators: true,
     });
 
+    const user = await User.findById(req.body.user).select('rooms');
+
+    fieldsToUpdate = {
+      rooms: user.rooms.filter((r) => {
+        return room.id + '' !== r + '';
+      }),
+    };
+    if (fieldsToUpdate.rooms[0] === null) {
+      fieldsToUpdate.rooms = [];
+    }
+
+    await user.update(fieldsToUpdate, {
+      new: true,
+      runValidators: true,
+    });
+
     res.status(200).json({
       success: true,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ success: false, error: 'Server Error' });
   }
 };

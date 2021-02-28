@@ -10,10 +10,12 @@ const {
   updateAvatar,
   updateInfo,
   editPassword,
+  getUserRooms,
 } = require('../controllers/room');
 const { protect } = require('../middleware/auth');
 const router = express.Router();
 
+router.get('/', protect, getUserRooms);
 router.post('/', protect, createRoom);
 router.get('/:id', protect, getRoom);
 router.get('/join/:id', protect, joinRoom);

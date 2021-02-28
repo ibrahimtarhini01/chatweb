@@ -31,7 +31,10 @@ const user = new mongoose.Schema({
     required: [true, 'Please add a password'],
     minlength: 6,
   },
-
+  rooms: {
+    type: [mongoose.Schema.Types.ObjectId],
+    default: [],
+  },
   avatar: {
     type: String,
     default: 'v1608731788/images/defualt_kzmons.png',

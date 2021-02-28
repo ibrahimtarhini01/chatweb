@@ -31,6 +31,7 @@ module.exports = function (passport) {
         email: user.email,
         createdAt: user.createdAt,
         avatar: user.avatar,
+        rooms: user.rooms,
       };
       cb(err, userInfo);
     });

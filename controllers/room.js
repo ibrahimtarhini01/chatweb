@@ -1,6 +1,8 @@
 const Room = require('../models/Room');
+const User = require('../models/User');
 
 // REFACTOR PROBABILITY: 100%
+// add invitation token that can be updated instead of room id
 
 // @route   POST /api/room
 // @desc    Create Room
@@ -49,8 +51,18 @@ exports.createRoom = async (req, res) => {
         ],
       });
     }
+    let rooms = [...req.user.rooms, room.id];
+    await User.findByIdAndUpdate(
+      req.user.id,
+      { rooms },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
     res.status(200).json({ success: true, data: room });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ success: false, error: 'Server Error' });
   }
 };
@@ -112,6 +124,16 @@ exports.joinRoom = async (req, res) => {
       new: true,
       runValidators: true,
     });
+
+    let rooms = [...req.user.rooms, room.id];
+    await User.findByIdAndUpdate(
+      req.user.id,
+      { rooms },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
 
     res.status(200).json({
       success: true,
@@ -287,6 +309,16 @@ exports.addUser = async (req, res) => {
       new: true,
       runValidators: true,
     });
+
+    let u = await User.findById(req.body.user);
+    let rooms = [...u.rooms, room.id];
+    await u.update(
+      { rooms },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
 
     res.status(200).json({
       success: true,

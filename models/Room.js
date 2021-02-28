@@ -40,6 +40,17 @@ const room = new mongoose.Schema({
       },
     },
   ],
+  lastMessage: {
+    message: {
+      type: String,
+    },
+    username: {
+      type: String,
+    },
+    createdAt: {
+      type: Date,
+    },
+  },
   password: {
     type: String,
     minlength: 6,

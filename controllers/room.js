@@ -67,6 +67,7 @@ exports.createRoom = async (req, res) => {
   }
 };
 
+// add user must be a member
 // @route   GET /api/room/:id
 // @desc    GET Room info by id
 // @access  private
@@ -77,6 +78,10 @@ exports.getRoom = async (req, res) => {
       return res
         .status(400)
         .json({ errors: [{ message: "Room doesn't exist" }] });
+    } else if (!exists(room.members, req.user.id)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'You are not authorized' }] });
     }
     res.status(200).json({ success: true, data: room });
   } catch (error) {
@@ -233,7 +238,7 @@ exports.leaveGroup = async (req, res) => {
         return member.user + '' !== req.user.id + '';
       }),
     };
-    console.log(fieldsToUpdate);
+
     if (fieldsToUpdate.members[0] === null) {
       fieldsToUpdate.members = [];
       fieldsToUpdate.admin = [];

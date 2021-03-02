@@ -7,7 +7,14 @@ import UserProfile from './Profile/UserProfile';
 import { Redirect } from 'react-router-dom';
 import ChatRoom from './Chat/ChatRoom';
 
-const Dashboard = ({ isAuthenticated, user, loading }) => {
+const Dashboard = ({
+  isAuthenticated,
+  user,
+  loading,
+  userRoomsLoading,
+  userRooms,
+  room,
+}) => {
   const [profileOpen, setProfileOpen] = useState(null);
 
   if (!isAuthenticated && !loading) {
@@ -15,7 +22,7 @@ const Dashboard = ({ isAuthenticated, user, loading }) => {
   }
   return (
     <Fragment>
-      {user === null ? (
+      {userRoomsLoading ? (
         <Loading />
       ) : (
         <div>
@@ -25,8 +32,13 @@ const Dashboard = ({ isAuthenticated, user, loading }) => {
               setProfileOpen={setProfileOpen}
               user={user}
             />
-            <DashboardSideBar user={user} setProfileOpen={setProfileOpen} />
-            <ChatRoom user={user} />
+            <DashboardSideBar
+              user={user}
+              setProfileOpen={setProfileOpen}
+              rooms={userRooms}
+            />
+
+            {room !== null && <ChatRoom user={user} room={room} />}
           </div>
         </div>
       )}
@@ -38,12 +50,18 @@ Dashboard.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   user: PropTypes.object,
   loading: PropTypes.bool.isRequired,
+  userRoomsLoading: PropTypes.bool.isRequired,
+  userRooms: PropTypes.array,
+  room: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
   loading: state.auth.loading,
+  userRooms: state.room.userRooms,
+  userRoomsLoading: state.room.userRoomsLoading,
+  room: state.room.room,
 });
 
 export default connect(mapStateToProps, {})(Dashboard);

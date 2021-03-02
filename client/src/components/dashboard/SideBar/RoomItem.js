@@ -1,12 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setCurrentRoom } from '../../../actions/room';
+import PropTypes from 'prop-types';
 
-const RoomItem = () => {
+const RoomItem = ({ room, setCurrentRoom }) => {
   return (
-    <div className='d-flex sidebar-room '>
+    <div
+      className='d-flex sidebar-room '
+      onClick={() => {
+        console.log(room);
+        setCurrentRoom(room);
+      }}
+    >
       <div className='sidebar-room-image'>
         <img
           className='rounded-circle'
-          src='https://pu-cs-society.herokuapp.com/static/media/new-upper-logo.e0e7cb52.webp'
+          src={`https://res.cloudinary.com/tweetco/image/upload/w_49/${room.avatar}`}
           alt=''
           width='49'
           height='49'
@@ -14,20 +23,35 @@ const RoomItem = () => {
       </div>
       <div className='flex-grow-1 border-bottom border-dark sidebar-room-info'>
         <div className='sidebar-room-info-top'>
-          <div className='sidebar-room-title'>CMPS</div>
-          <div className='sidebar-room-time secondary '>10:40 am</div>
+          <div className='sidebar-room-title'>{room.title}</div>
+          {room.lastMessage !== undefined ? (
+            <div className='sidebar-room-time secondary '>
+              {room.lastMessage.createdAt}
+            </div>
+          ) : (
+            <div className='sidebar-room-time secondary '></div>
+          )}
         </div>
-        <div className='sidebar-room-message secondary'>
-          <div className='sidebar-room-user'>Ibrahim:&nbsp; </div>
-          <div className='sidebar-room-text '>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel hic
-            omnis numquam ea necessitatibus possimus facere cupiditate eum
-            libero illo.
+        {room.lastMessage !== undefined ? (
+          <div className='sidebar-room-message secondary'>
+            <div className='sidebar-room-user'>
+              {room.lastMessage.username}:&nbsp;{' '}
+            </div>
+            <div className='sidebar-room-text '>{room.lastMessage.message}</div>
           </div>
-        </div>
+        ) : (
+          <div className='sidebar-room-message secondary'>
+            <div className='sidebar-room-user'></div>
+            <div className='sidebar-room-text '></div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default RoomItem;
+RoomItem.propTypes = {
+  room: PropTypes.object.isRequired,
+  setCurrentRoom: PropTypes.func.isRequired,
+};
+export default connect(null, { setCurrentRoom })(RoomItem);

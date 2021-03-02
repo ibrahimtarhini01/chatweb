@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import RoomItem from './RoomItem';
 
-const UserRooms = () => {
+const UserRooms = ({ rooms }) => {
   const [input, setInput] = useState('');
   return (
     <div>
@@ -26,18 +26,9 @@ const UserRooms = () => {
         </div>
       </div>
       <div className='overflow-auto rooms'>
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
-        <RoomItem />
+        {rooms.map((room, id) => {
+          return <RoomItem room={room} key={id} />;
+        })}
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import ChatRoomFooter from './ChatRoomFooter';
 import ChatRoomHeader from './ChatRoomHeader';
 import ChatRoomMessages from './ChatRoomMessages';
 
-const ChatRoom = ({ user, getChats, afterPostMessage }) => {
+const ChatRoom = ({ user, getChats, afterPostMessage, room }) => {
   return (
     <div className='chat-desktop'>
       <div
@@ -19,7 +19,7 @@ const ChatRoom = ({ user, getChats, afterPostMessage }) => {
           backgroundAttachment: 'fixed',
         }}
       ></div>
-      <ChatRoomHeader user={user} />
+      <ChatRoomHeader user={user} room={room} />
       <ChatRoomMessages />
       <ChatRoomFooter user={user} />
     </div>

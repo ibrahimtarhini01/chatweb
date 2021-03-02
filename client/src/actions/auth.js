@@ -8,16 +8,18 @@ import {
 } from './types';
 import api from '../utils/api';
 import { setAlert } from './alerts';
+import { getUserRooms } from './room';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
   try {
     const res = await api.get('/auth/me');
-
+    console.log(1);
     dispatch({
       type: USER_LOADED,
       payload: res.data.data,
     });
+    dispatch(getUserRooms());
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,

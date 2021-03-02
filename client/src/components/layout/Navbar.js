@@ -4,7 +4,7 @@ import { isAuth, logout } from '../../actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Navbar = ({ isAuth, isAuthenticated, logout }) => {
+const Navbar = ({ isAuth, isAuthenticated }) => {
   useEffect(() => {
     if (isAuthenticated === false) {
       isAuth();

@@ -1,13 +1,13 @@
 import React from 'react';
 
-const ChatRoomHeader = ({ user }) => {
+const ChatRoomHeader = ({ user, room }) => {
   return (
     <div className='chatroom-nav  bg-main d-flex  align-items-center '>
       <div className='mr-2'>
         <div className=''>
           <img
             className='rounded-circle'
-            src='https://pu-cs-society.herokuapp.com/static/media/new-upper-logo.e0e7cb52.webp'
+            src={`https://res.cloudinary.com/tweetco/image/upload/w_49/${room.avatar}`}
             alt=''
             width='49'
             height='49'
@@ -15,13 +15,10 @@ const ChatRoomHeader = ({ user }) => {
         </div>
       </div>
       <div className='chatroom-nav-info'>
-        <div className='chatroom-nav-title'>CMPS</div>
+        <div className='chatroom-nav-title'>{room.title}</div>
         <div className='chatroom-nav-message'>
           <span className='chatroom-nav-text secondary'>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic earum
-            quam aliquam nam maxime. Voluptates, vel ullam. Blanditiis adipisci
-            laborum aut. Voluptatibus neque eligendi harum iure alias tenetur!
-            Praesentium, nihil.
+            {room.members.map((m) => m.username + ' , ')}
           </span>
         </div>
       </div>

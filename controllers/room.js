@@ -250,14 +250,14 @@ exports.leaveGroup = async (req, res) => {
 
     fieldsToUpdate = {
       rooms: req.user.rooms.filter((r) => {
-        return room.id + '' !== r + '';
+        return room.id.toString() !== r.toString();
       }),
     };
     if (fieldsToUpdate.rooms[0] === null) {
       fieldsToUpdate.rooms = [];
     }
 
-    await User.findByIdAndUpdate(fieldsToUpdate, {
+    await User.findByIdAndUpdate({ _id: req.user.id }, fieldsToUpdate, {
       new: true,
       runValidators: true,
     });
@@ -266,6 +266,7 @@ exports.leaveGroup = async (req, res) => {
       success: true,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ success: false, error: 'Server Error' });
   }
 };

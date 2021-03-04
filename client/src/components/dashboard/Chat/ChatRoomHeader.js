@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { clearRoom } from '../../../actions/room';
-const ChatRoomHeader = ({ user, room, clearRoom }) => {
+import { clearRoom, leaveRoom } from '../../../actions/room';
+
+const ChatRoomHeader = ({ user, room, clearRoom, leaveRoom }) => {
   return (
     <div className='chatroom-nav  bg-main d-flex  align-items-center '>
       <i
@@ -30,12 +31,43 @@ const ChatRoomHeader = ({ user, room, clearRoom }) => {
           </span>
         </div>
       </div>
+      <div>
+        <div className='dropdown d-inline '>
+          <button
+            className='btn btn-link text-center menu rounded-circle text-muted '
+            id='dropdownMenuButton'
+            data-toggle='dropdown'
+            aria-haspopup='true'
+            aria-expanded='false'
+          >
+            <i className='fas fa-ellipsis-v '></i>
+          </button>
+          <div
+            className='dropdown-menu dropdown-menu-right border-0 shadow cursor-pointer  bg-main text-white'
+            aria-labelledby='dropdownMenuButton'
+          >
+            <div className='dropdown-item text-white  py-2' onClick={() => {}}>
+              <i className='fas fa-users mr-2'></i> Room Profile
+            </div>
+
+            <div
+              className='dropdown-item text-white  py-2'
+              onClick={() => {
+                leaveRoom(room._id);
+              }}
+            >
+              <i className='fas fa-sign-out-alt mr-2'></i> Leave
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 ChatRoomHeader.propTypes = {
   clearRoom: PropTypes.func.isRequired,
+  leaveRoom: PropTypes.func.isRequired,
 };
 
-export default connect(null, { clearRoom })(ChatRoomHeader);
+export default connect(null, { clearRoom, leaveRoom })(ChatRoomHeader);

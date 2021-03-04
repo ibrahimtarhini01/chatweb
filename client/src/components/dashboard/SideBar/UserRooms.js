@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RoomItem from './RoomItem';
 
 const UserRooms = ({ rooms }) => {
   const [search, setSearch] = useState(rooms);
-
+  useEffect(() => {
+    setSearch(rooms);
+  }, [rooms, setSearch]);
   return (
     <div>
       <div className=' border-bottom border-dark py-2 px-4  '>

@@ -3,6 +3,7 @@ import {
   CREATE_ROOM,
   GET_ROOM,
   GET_USER_ROOMS,
+  LEAVE_ROOM,
   ROOM_AVATAR,
 } from '../actions/types';
 
@@ -44,6 +45,16 @@ export default function (state = initialState, action) {
         userRooms: [...state.userRooms.slice(0, -1), payload],
         room: payload,
         roomLoading: false,
+      };
+    case LEAVE_ROOM:
+      return {
+        ...state,
+        userRooms: state.userRooms.filter(
+          (room) => room._id + ' ' !== payload + ' ',
+        ),
+        room: null,
+        roomLoading: true,
+        next: false,
       };
     case CLEAR_ROOM:
       return {

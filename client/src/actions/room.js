@@ -3,6 +3,7 @@ import {
   CREATE_ROOM,
   GET_ROOM,
   GET_USER_ROOMS,
+  LEAVE_ROOM,
   ROOM_AVATAR,
 } from './types';
 import api from '../utils/api';
@@ -22,7 +23,14 @@ export const addUserRoom = () => async (dispatch) => {};
 
 export const kick = () => async (dispatch) => {};
 
-export const leaveRoom = () => async (dispatch) => {};
+export const leaveRoom = (id) => async (dispatch) => {
+  try {
+    await api.post(`/room/leave/${id}`);
+    dispatch({ type: LEAVE_ROOM, payload: id });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const makeAdmin = () => async (dispatch) => {};
 

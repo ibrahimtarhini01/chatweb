@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { updateProfilePic } from '../../actions/auth';
+import { updateRoomAvatar } from '../../actions/room';
 import PropTypes from 'prop-types';
 
 const Avatar = ({
+  room_id,
   avatar,
   width,
   open,
   edit,
   updateProfilePic,
+  updateRoomAvatar,
   cancel,
   confirm,
   setSelected,
@@ -35,7 +38,13 @@ const Avatar = ({
       reader.onloadend = () => {
         const data = { image: reader.result };
         console.log(1);
-        updateProfilePic(data);
+        if (room_id !== undefined) {
+          console.log(33);
+          updateRoomAvatar(room_id, data);
+        } else {
+          updateProfilePic(data);
+        }
+
         setFileInputState1('');
         setPreviewSource1('');
         setSelectedFile1();
@@ -51,6 +60,8 @@ const Avatar = ({
     selectedFile1,
     setSelected,
     updateProfilePic,
+    updateRoomAvatar,
+    room_id,
     setCancel,
     setConfirm,
   ]);
@@ -113,6 +124,7 @@ Avatar.propTypes = {
   edit: PropTypes.bool.isRequired,
   setSelected: PropTypes.func,
   updateProfilePic: PropTypes.func.isRequired,
+  updateRoomAvatar: PropTypes.func.isRequired,
 };
 
-export default connect(null, { updateProfilePic })(Avatar);
+export default connect(null, { updateProfilePic, updateRoomAvatar })(Avatar);

@@ -1,7 +1,20 @@
-import { CLEAR_ROOM, GET_ROOM, GET_USER_ROOMS } from './types';
+import {
+  CLEAR_ROOM,
+  CREATE_ROOM,
+  GET_ROOM,
+  GET_USER_ROOMS,
+  ROOM_AVATAR,
+} from './types';
 import api from '../utils/api';
 
-export const createRoom = () => async (dispatch) => {};
+export const createRoom = (data) => async (dispatch) => {
+  try {
+    const res = await api.post('/room', data);
+    dispatch({ type: CREATE_ROOM, payload: res.data.data });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const joinRoom = () => async (dispatch) => {};
 
@@ -15,7 +28,14 @@ export const makeAdmin = () => async (dispatch) => {};
 
 export const updateRoomInfo = () => async (dispatch) => {};
 
-export const updateRoomAvatar = () => async (dispatch) => {};
+export const updateRoomAvatar = (id, image) => async (dispatch) => {
+  try {
+    const res = await api.put(`/room/avatar/${id}`, image);
+    dispatch({ type: ROOM_AVATAR, payload: res.data.data });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const editPassword = () => async (dispatch) => {};
 

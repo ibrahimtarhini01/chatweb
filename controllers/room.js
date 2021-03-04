@@ -1,6 +1,6 @@
 const Room = require('../models/Room');
 const User = require('../models/User');
-
+const cloudinary = require('cloudinary').v2;
 // REFACTOR PROBABILITY: 100%
 // add invitation token that can be updated instead of room id
 
@@ -454,9 +454,18 @@ exports.updateAvatar = async (req, res) => {
     );
     res.status(200).json({
       success: true,
-      data: uploadResponse.url.slice(47),
+      data: {
+        avatar: uploadResponse.url.slice(47),
+        _id: room._id,
+        title: room.title,
+        admin: room.admin,
+        description: room.description,
+        members: room.members,
+        createdAt: room.createdAt,
+      },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ success: false, error: 'Server Error' });
   }
 };

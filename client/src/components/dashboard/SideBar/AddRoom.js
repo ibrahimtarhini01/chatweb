@@ -1,10 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import Avatar from '../../layout/Avatar';
+import { connect } from 'react-redux';
+import { createRoom, clearRoom } from '../../../actions/room';
+import PropTypes from 'prop-types';
 
-const AddRoom = ({ user }) => {
+const AddRoom = ({ user, createRoom, room, next, clearRoom }) => {
   const [hidden, setHidden] = useState(true);
   const [show, setShow] = useState(false);
-  const [next, setNext] = useState(true);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -23,11 +25,14 @@ const AddRoom = ({ user }) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmitCreate = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
-
-    console.log(formData);
+    if (password === '') {
+      createRoom({ title, description });
+    } else {
+      createRoom({ title, description, password });
+    }
   };
 
   return (
@@ -70,7 +75,7 @@ const AddRoom = ({ user }) => {
               />
             </div>
             <div className='form-group'>
-              <label for='description'>
+              <label htmlFor='description'>
                 Description <span className='text-muted'>(required)</span>
               </label>
               <textarea
@@ -90,9 +95,9 @@ const AddRoom = ({ user }) => {
                 id='defaultCheck1'
                 value={show}
                 checked={show}
-                onClick={() => setShow(!show)}
+                onChange={() => setShow(!show)}
               />
-              <label className='form-check-label' for='defaultCheck1'>
+              <label className='form-check-label' htmlFor='defaultCheck1'>
                 Private
               </label>
             </div>
@@ -133,7 +138,8 @@ const AddRoom = ({ user }) => {
           <div className='d-flex justify-content-around w-100 py-4'>
             <div className='profile-avatar text-center'>
               <Avatar
-                avatar={user.avatar}
+                room_id={room._id}
+                avatar={room.avatar}
                 width='200'
                 edit={true}
                 cancel={cancel}
@@ -173,9 +179,7 @@ const AddRoom = ({ user }) => {
                 id='link'
                 readOnly
                 disabled
-                value={
-                  'sadusbauydvuyasvuyavdtyvsadiysadiasctdcatscdsadcsatiudasuduysagdyugasuydsyugdya'
-                }
+                value={`https://localhost:3000/api/room/join/${room._id}`}
               />{' '}
               <div className='input-group-prepend  bg-transparent '>
                 <button
@@ -185,7 +189,7 @@ const AddRoom = ({ user }) => {
                   title='Copy to Clipboard'
                   onClick={() =>
                     navigator.clipboard.writeText(
-                      'sadusbauydvuyasvuyavdtyvsadiysadiasctdcatscdsadcsatiudasuduysagdyugasuydsyugdya',
+                      `https://localhost:3000/api/room/join/${room._id}`,
                     )
                   }
                 >
@@ -202,7 +206,7 @@ const AddRoom = ({ user }) => {
             type='Submit'
             className='btn   border-0 account-btn btn-block
           btn-primary ml-auto '
-            onClick={(e) => onSubmit(e)}
+            onClick={(e) => onSubmitCreate(e)}
           >
             Create Server
           </button>
@@ -211,9 +215,9 @@ const AddRoom = ({ user }) => {
             type='Submit'
             className='btn   border-0 account-btn btn-block
           btn-primary ml-auto '
+            onClick={() => clearRoom()}
             data-dismiss='modal'
             aria-label='Close'
-            onClick={(e) => onSubmit(e)}
           >
             Done
           </button>
@@ -223,4 +227,7 @@ const AddRoom = ({ user }) => {
   );
 };
 
-export default AddRoom;
+AddRoom.propTypes = {
+  createRoom: PropTypes.func.isRequired,
+};
+export default connect(null, { createRoom, clearRoom })(AddRoom);

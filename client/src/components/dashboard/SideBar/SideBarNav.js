@@ -1,14 +1,21 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { logout } from '../../../actions/auth';
+import { clearRoom } from '../../../actions/room';
 import PropTypes from 'prop-types';
 import $ from 'jquery';
 import Avatar from '../../layout/Avatar';
 import Modal from '../../layout/Modal';
 import AddRoom from './AddRoom';
 
-const SideBarNav = ({ user, setProfileOpen, logout }) => {
+const SideBarNav = ({
+  user,
+  setProfileOpen,
+  logout,
+  room,
+  clearRoom,
+  next,
+}) => {
   return (
     <Fragment>
       <div className='sidebar-nav bg-main d-flex justify-content-between align-items-center'>
@@ -51,6 +58,7 @@ const SideBarNav = ({ user, setProfileOpen, logout }) => {
               <div
                 className='dropdown-item text-white py-2 '
                 onClick={() => {
+                  clearRoom();
                   $('#addRoom').modal('show');
                 }}
               >
@@ -85,7 +93,10 @@ const SideBarNav = ({ user, setProfileOpen, logout }) => {
           </div>
         </div>
       </div>
-      <Modal id='addRoom' Component={() => <AddRoom user={user} />} />
+      <Modal
+        id='addRoom'
+        Component={() => <AddRoom user={user} room={room} next={next} />}
+      />
       <Modal
         id='joinRoom'
         Component={() => (
@@ -130,6 +141,7 @@ SideBarNav.propTypes = {
   logout: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   setProfileOpen: PropTypes.func.isRequired,
+  clearRoom: PropTypes.func.isRequired,
 };
 
-export default connect(null, { logout })(SideBarNav);
+export default connect(null, { logout, clearRoom })(SideBarNav);

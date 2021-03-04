@@ -14,6 +14,7 @@ const Dashboard = ({
   userRoomsLoading,
   userRooms,
   room,
+  next,
 }) => {
   const [profileOpen, setProfileOpen] = useState(null);
 
@@ -37,9 +38,10 @@ const Dashboard = ({
               setProfileOpen={setProfileOpen}
               rooms={userRooms}
               room={room}
+              next={next}
             />
 
-            <ChatRoom user={user} room={room} />
+            <ChatRoom user={user} room={room} next={next} />
           </div>
         </div>
       )}
@@ -54,6 +56,7 @@ Dashboard.propTypes = {
   userRoomsLoading: PropTypes.bool.isRequired,
   userRooms: PropTypes.array,
   room: PropTypes.object,
+  next: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -63,6 +66,7 @@ const mapStateToProps = (state) => ({
   userRooms: state.room.userRooms,
   userRoomsLoading: state.room.userRoomsLoading,
   room: state.room.room,
+  next: state.room.next,
 });
 
 export default connect(mapStateToProps, {})(Dashboard);

@@ -7,13 +7,13 @@ import ChatRoomHeader from './ChatRoomHeader';
 import ChatRoomMessages from './ChatRoomMessages';
 import ChatRoomDefault from './ChatRoomDefault';
 
-const ChatRoom = ({ user, getChats, afterPostMessage, room }) => {
+const ChatRoom = ({ user, getChats, afterPostMessage, room, next }) => {
   return (
     <Fragment>
       {room !== null ? (
         <div
           className={`${
-            room !== null && window.innerWidth < 800
+            room !== null && window.innerWidth < 800 && !next
               ? 'chat-mobile'
               : 'chat-desktop'
           }`}

@@ -36,9 +36,10 @@ const Dashboard = ({
               user={user}
               setProfileOpen={setProfileOpen}
               rooms={userRooms}
+              room={room}
             />
 
-            {room !== null && <ChatRoom user={user} room={room} />}
+            <ChatRoom user={user} room={room} />
           </div>
         </div>
       )}

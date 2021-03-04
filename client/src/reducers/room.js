@@ -1,4 +1,4 @@
-import { GET_ROOM, GET_USER_ROOMS } from '../actions/types';
+import { CLEAR_ROOM, GET_ROOM, GET_USER_ROOMS } from '../actions/types';
 
 const initialState = {
   room: null,
@@ -23,6 +23,12 @@ export default function (state = initialState, action) {
         ...state,
         userRooms: payload,
         userRoomsLoading: false,
+      };
+    case CLEAR_ROOM:
+      return {
+        ...state,
+        room: null,
+        roomLoading: true,
       };
 
     default:

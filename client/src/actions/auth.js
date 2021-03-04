@@ -62,6 +62,7 @@ export const login = (username, password) => async (dispatch) => {
     const res = await api.post('/auth/login', body);
 
     dispatch({ type: USER_LOADED, payload: res.data.user });
+    dispatch(getUserRooms());
   } catch (err) {
     console.log(err);
     const errors = err.response.data.errors;

@@ -14,6 +14,7 @@ export const REMOVE_ALERT = 'REMOVE_ALERT';
 // Room
 export const GET_USER_ROOMS = 'GET_USER_ROOMS';
 export const GET_ROOM = 'GET_ROOM';
+export const CLEAR_ROOM = 'CLEAR_ROOM';
 
 // Chat
 export const GET_CHAT = 'GET_CHAT';

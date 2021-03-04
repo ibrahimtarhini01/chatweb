@@ -1,4 +1,4 @@
-import { GET_ROOM, GET_USER_ROOMS } from './types';
+import { CLEAR_ROOM, GET_ROOM, GET_USER_ROOMS } from './types';
 import api from '../utils/api';
 
 export const createRoom = () => async (dispatch) => {};
@@ -32,9 +32,12 @@ export const getUserRooms = () => async (dispatch) => {
 export const setCurrentRoom = (data) => (dispatch) => {
   try {
     //const res = await api.get(`/room/${data}`);
-
     dispatch({ type: GET_ROOM, payload: data });
   } catch (error) {
     console.log(error);
   }
+};
+
+export const clearRoom = () => (dispatch) => {
+  dispatch({ type: CLEAR_ROOM });
 };

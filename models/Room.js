@@ -59,6 +59,10 @@ const room = new mongoose.Schema({
     type: String,
     default: 'v1608731788/images/defualt_kzmons.png',
   },
+  public: {
+    type: Boolean,
+    default: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -70,8 +74,14 @@ room.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+
+  if (this.password !== undefined) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    this.public = false;
+  } else {
+    this.public = true;
+  }
 });
 
 // Match room entered password to hashed password on database

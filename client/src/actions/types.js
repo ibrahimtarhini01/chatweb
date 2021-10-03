@@ -16,8 +16,10 @@ export const GET_USER_ROOMS = 'GET_USER_ROOMS';
 export const GET_ROOM = 'GET_ROOM';
 export const CREATE_ROOM = 'CREATE_ROOM';
 export const ROOM_AVATAR = 'ROOM_AVATAR';
+export const PREVIEW_ROOM = 'PREVIEW_ROOM';
 export const LEAVE_ROOM = 'LEAVE_ROOM';
 export const CLEAR_ROOM = 'CLEAR_ROOM';
+export const CLEAR_ROOM_PREVIEW = 'CLEAR_ROOM_PREVIEW';
 
 // Chat
 export const GET_CHAT = 'GET_CHAT';

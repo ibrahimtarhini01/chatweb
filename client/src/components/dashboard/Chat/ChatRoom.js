@@ -7,7 +7,16 @@ import ChatRoomHeader from './ChatRoomHeader';
 import ChatRoomMessages from './ChatRoomMessages';
 import ChatRoomDefault from './ChatRoomDefault';
 
-const ChatRoom = ({ user, getChats, afterPostMessage, room, next }) => {
+const ChatRoom = ({
+  user,
+  getChats,
+  afterPostMessage,
+  room,
+  next,
+  setProfileOpen,
+  setUserProfile,
+  profileOpen,
+}) => {
   return (
     <Fragment>
       {room !== null ? (
@@ -21,8 +30,7 @@ const ChatRoom = ({ user, getChats, afterPostMessage, room, next }) => {
           <div
             className=''
             style={{
-              backgroundImage:
-                'url("https://web.whatsapp.com/img/bg-chat-tile-dark_a4be512e7195b6b733d9110b408f075d.png")',
+              backgroundImage: 'url("bg.png")',
               height: '100%',
               width: '100%',
               backgroundRepeat: 'repeat',
@@ -30,7 +38,13 @@ const ChatRoom = ({ user, getChats, afterPostMessage, room, next }) => {
               backgroundAttachment: 'fixed',
             }}
           ></div>
-          <ChatRoomHeader user={user} room={room} />
+          <ChatRoomHeader
+            user={user}
+            room={room}
+            setProfileOpen={setProfileOpen}
+            setUserProfile={setUserProfile}
+            profileOpen={profileOpen}
+          />
           <ChatRoomMessages />
           <ChatRoomFooter user={user} />
         </div>

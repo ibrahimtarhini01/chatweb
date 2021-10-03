@@ -89,6 +89,23 @@ exports.getRoom = async (req, res) => {
   }
 };
 
+// @route   GET /api/room/:id
+// @desc    GET Room info by id
+// @access  private
+exports.getRoomPreview = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id).select('-password');
+    if (!room) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "Room doesn't exist" }] });
+    }
+    res.status(200).json({ success: true, data: room });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
 // @route   GET /api/room/
 // @desc    GET user's rooms
 // @access  private
@@ -144,7 +161,7 @@ exports.joinRoom = async (req, res) => {
       ],
     };
 
-    await room.update(fieldsToUpdate, {
+    await room.updateOne(fieldsToUpdate, {
       new: true,
       runValidators: true,
     });
@@ -161,6 +178,7 @@ exports.joinRoom = async (req, res) => {
 
     res.status(200).json({
       success: true,
+      data: room,
     });
   } catch (error) {
     console.log(error);
@@ -200,7 +218,49 @@ exports.makeAdmin = async (req, res) => {
       ],
     };
 
-    await room.update(fieldsToUpdate, {
+    await room.updateOne(fieldsToUpdate, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+// @route   PUT /api/room/admin/:id
+// @desc    remove user from admin
+// @access  private
+exports.removeAdmin = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id);
+
+    console.log(req.body.user);
+    console.log(room.admin);
+    if (!room) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "Room doesn't exist" }] });
+    } else if (!exists(room.admin, req.user.id)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'You are not authorized' }] });
+    } else if (!exists(room.members, req.body.user)) {
+      return res.status(400).json({ errors: [{ message: 'User not found' }] });
+    } else if (!exists(room.admin, req.body.user)) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: 'User already not an admin' }] });
+    }
+    const fieldsToUpdate = {
+      admin: room.admin.filter((item) => item.user + '' !== req.body.user + ''),
+    };
+
+    await room.updateOne(fieldsToUpdate, {
       new: true,
       runValidators: true,
     });
@@ -300,7 +360,7 @@ exports.kick = async (req, res) => {
       fieldsToUpdate.members = [];
       fieldsToUpdate.admin = [];
     }
-    await room.update(fieldsToUpdate, {
+    await room.updateOne(fieldsToUpdate, {
       new: true,
       runValidators: true,
     });
@@ -316,7 +376,7 @@ exports.kick = async (req, res) => {
       fieldsToUpdate.rooms = [];
     }
 
-    await user.update(fieldsToUpdate, {
+    await user.updateOne(fieldsToUpdate, {
       new: true,
       runValidators: true,
     });
@@ -405,7 +465,7 @@ exports.updateInfo = async (req, res) => {
       description: req.body.description,
     };
 
-    await room.update(fieldsToUpdate, {
+    await room.updateOne(fieldsToUpdate, {
       new: true,
       runValidators: true,
     });
@@ -444,7 +504,7 @@ exports.updateAvatar = async (req, res) => {
       public_id: `room_${room.id}`,
     });
 
-    await room.update(
+    await room.updateOne(
       {
         avatar: uploadResponse.url.slice(47),
       },
@@ -486,15 +546,22 @@ exports.editPassword = async (req, res) => {
         .status(400)
         .json({ errors: [{ message: 'User not authorized' }] });
     }
-    if (room.password === undefined) {
-      room.password = req.body.password;
+    console.log(req.body);
+    console.log(room.password);
+    if (req.body.password === undefined) {
+      room.public = true;
+      room.password = undefined;
     } else {
-      if (!(await room.matchPassword(req.body.currentPassword))) {
-        return res
-          .status(400)
-          .json({ errors: [{ message: 'Not a Valid Password' }] });
+      if (room.password === undefined) {
+        room.password = req.body.password;
+      } else {
+        if (!(await room.matchPassword(req.body.currentPassword))) {
+          return res
+            .status(400)
+            .json({ errors: [{ message: 'Not a Valid Password' }] });
+        }
+        room.password = req.body.password;
       }
-      room.password = req.body.password;
     }
 
     await room.save();

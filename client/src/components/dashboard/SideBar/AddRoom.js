@@ -39,7 +39,7 @@ const AddRoom = ({ user, createRoom, room, next, clearRoom }) => {
     <div className='modal-content border-0'>
       <div className='modal-header bg-main border-0 '>
         <h4 className='modal-title ' id='staticBackdropLabel'>
-          Create a Server
+          Create a Room
         </h4>
         <button
           type='button'
@@ -55,7 +55,7 @@ const AddRoom = ({ user, createRoom, room, next, clearRoom }) => {
       {!next ? (
         <div className='modal-body text-center border-0  bg-main'>
           <h6 className='text-muted mb-4'>
-            Your Server is where you and your friends hangout. Make yours and
+            Your Room is where you and your friends hangout. Make yours and
             start talking
           </h6>
           <form className='text-left'>

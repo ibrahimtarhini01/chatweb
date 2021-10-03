@@ -100,21 +100,20 @@ export const logout = () => async (dispatch) => {
   }
 };
 
-export const changePassword = (currentPassword, newPassword) => async (
-  dispatch,
-) => {
-  try {
-    await api.put(`/auth/password`, { currentPassword, newPassword });
-    dispatch(setAlert('Password Changed Successfully ', 'info'));
-    dispatch(loadUser());
-  } catch (err) {
-    const errors = err.response.data.errors;
+export const changePassword =
+  (currentPassword, newPassword) => async (dispatch) => {
+    try {
+      await api.put(`/auth/password`, { currentPassword, newPassword });
+      dispatch(setAlert('Password Changed Successfully ', 'info'));
+      dispatch(loadUser());
+    } catch (err) {
+      const errors = err.response.data.errors;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.message, 'danger')));
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.message, 'danger')));
+      }
     }
-  }
-};
+  };
 export const deleteUser = () => async (dispatch) => {
   try {
     await api.delete(`/auth/delete`);

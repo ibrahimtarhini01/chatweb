@@ -8,13 +8,17 @@ const ChatRoomFooter = ({ user }) => {
         className='form-inline w-100 border-0 rounded-pill '
         onSubmit={(e) => {
           e.preventDefault();
-
-          let chatMessage = message;
-          let userId = user.id;
-          let userName = user.username;
-          let nowTime = moment();
-
-          setMessage('');
+          const data = {
+            text: message,
+            time: new Date().toLocaleString('en-US', {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: true,
+            }),
+            username: user.username,
+            user: true,
+          };
+          console.log(data);
         }}
       >
         <div className='d-flex w-100 '>

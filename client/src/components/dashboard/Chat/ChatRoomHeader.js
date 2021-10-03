@@ -3,17 +3,36 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { clearRoom, leaveRoom } from '../../../actions/room';
 
-const ChatRoomHeader = ({ user, room, clearRoom, leaveRoom }) => {
+const ChatRoomHeader = ({
+  user,
+  room,
+  clearRoom,
+  leaveRoom,
+  setProfileOpen,
+  setUserProfile,
+  profileOpen,
+}) => {
   return (
     <div className='chatroom-nav  bg-main d-flex  align-items-center '>
       <i
-        className='fas fa-arrow-left mr-4 ml-2 fa-lg'
+        className='fas fa-arrow-left mr-4 ml-2 fa-lg cursor-pointer'
         onClick={() => {
-          clearRoom();
+          setProfileOpen(false);
+          setUserProfile(true);
+
+          setTimeout(() => {
+            clearRoom();
+          }, 500);
         }}
       ></i>
-      <div className='mr-2'>
-        <div className=''>
+      <div className='mr-2 cursor-pointer'>
+        <div
+          className=''
+          onClick={() => {
+            setUserProfile(false);
+            setProfileOpen(true);
+          }}
+        >
           <img
             className='rounded-circle'
             src={`https://res.cloudinary.com/tweetco/image/upload/w_40/${room.avatar}`}
@@ -23,11 +42,17 @@ const ChatRoomHeader = ({ user, room, clearRoom, leaveRoom }) => {
           />
         </div>
       </div>
-      <div className='chatroom-nav-info'>
-        <div className='chatroom-nav-title'>{room.title}</div>
-        <div className='chatroom-nav-message'>
+      <div className='chatroom-nav-info '>
+        <div className='chatroom-nav-title '>{room.title}</div>
+        <div className='chatroom-nav-message '>
           <span className='chatroom-nav-text secondary'>
-            {room.members.map((m) => m.username + ' , ')}
+            {room.members.map((m, id) => {
+              if (id !== room.members.length - 1) {
+                return m.username + ' , ';
+              } else {
+                return m.username;
+              }
+            })}
           </span>
         </div>
       </div>

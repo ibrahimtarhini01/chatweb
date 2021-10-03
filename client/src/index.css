@@ -57,6 +57,10 @@ button:focus {
   background-color: #2a2f32;
 }
 
+.bg-main-dark {
+  background-color: #131c21;
+}
+
 .bg-selected {
   background-color: #292b2f;
 }
@@ -506,4 +510,43 @@ button:focus {
   width: 100%;
   z-index: 100;
   box-shadow: 0 1px 3px rgba(var(0, 0, 0, 0.4));
+}
+
+/* room profile members context menu*/
+.react-contextmenu {
+  z-index: 200;
+}
+
+.react-contextmenu .react-contextmenu-item:hover {
+  background: #d9d9d9;
+}
+
+.react-contextmenu-item:hover:not(.react-contextmenu-item--disabled) {
+  background-color: #323739;
+}
+
+.react-contextmenu-wrapper {
+  display: inline;
+}
+
+.react-contextmenu .react-contextmenu-item {
+  font-size: 14px;
+  display: inline;
+  text-decoration: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.2s;
+  position: relative;
+  width: 150px;
+
+  align-items: center;
+  outline: none;
+}
+
+.react-contextmenu-item p {
+  margin-left: 10px;
+}
+.react-contextmenu-item svg {
+  font-size: 14px;
 }

@@ -7,6 +7,7 @@ import $ from 'jquery';
 import Avatar from '../../layout/Avatar';
 import Modal from '../../layout/Modal';
 import AddRoom from './AddRoom';
+import JoinRoom from './JoinRoom';
 
 const SideBarNav = ({
   user,
@@ -15,12 +16,15 @@ const SideBarNav = ({
   room,
   clearRoom,
   next,
+  roomPreview,
+  setUserProfile,
 }) => {
   return (
     <Fragment>
       <div className='sidebar-nav bg-main d-flex justify-content-between align-items-center'>
         <div
           onClick={() => {
+            setUserProfile(true);
             setProfileOpen(true);
           }}
         >
@@ -100,37 +104,7 @@ const SideBarNav = ({
       <Modal
         id='joinRoom'
         Component={() => (
-          <div className='modal-content rounded-0'>
-            <div className='modal-header bg-main rounded-0'>
-              <h4 className='modal-title ' id='staticBackdropLabel'>
-                Join
-              </h4>
-              <button
-                type='button'
-                className='close'
-                data-dismiss='modal'
-                aria-label='Close'
-              >
-                <span className='text-white' aria-hidden='true'>
-                  &times;
-                </span>
-              </button>
-            </div>
-            <div className='modal-body text-center' style={{ height: '7rem' }}>
-              {' '}
-              <h4>You need to be logged in to access Meetings</h4>{' '}
-            </div>
-            <div className='modal-footer'>
-              <button
-                type='button'
-                data-dismiss='modal'
-                aria-label='Close'
-                className='btn btn-dark bg-main rounded-0 '
-              >
-                Sign In
-              </button>
-            </div>
-          </div>
+          <JoinRoom user={user} roomPreview={roomPreview} room={room} />
         )}
       />
     </Fragment>

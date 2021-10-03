@@ -1,9 +1,11 @@
 import {
   CLEAR_ROOM,
+  CLEAR_ROOM_PREVIEW,
   CREATE_ROOM,
   GET_ROOM,
   GET_USER_ROOMS,
   LEAVE_ROOM,
+  PREVIEW_ROOM,
   ROOM_AVATAR,
 } from '../actions/types';
 
@@ -12,6 +14,7 @@ const initialState = {
   userRooms: null,
   roomLoading: true,
   userRoomsLoading: true,
+  roomPreview: null,
   next: false,
 };
 // eslint-disable-next-line
@@ -37,6 +40,7 @@ export default function (state = initialState, action) {
         userRooms: [...state.userRooms, payload],
         room: payload,
         roomLoading: false,
+        roomLoading: null,
         next: true,
       };
     case ROOM_AVATAR:
@@ -56,12 +60,19 @@ export default function (state = initialState, action) {
         roomLoading: true,
         next: false,
       };
+    case PREVIEW_ROOM:
+      return { ...state, roomPreview: payload };
     case CLEAR_ROOM:
       return {
         ...state,
         room: null,
         roomLoading: true,
         next: false,
+      };
+    case CLEAR_ROOM_PREVIEW:
+      return {
+        ...state,
+        roomPreview: null,
       };
 
     default:

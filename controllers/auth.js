@@ -93,15 +93,17 @@ exports.login = (req, res, next) => {
           .status(400)
           .json({ errors: [{ message: 'Please verify your email to login' }] });
       }
+
       req.logIn(user, (err) => {
         if (err) throw err;
         const val = {
           verfied: user.verified,
-          _id: user._id,
+          id: user._id,
           username: user.username,
           email: user.email,
           createdAt: user.createdAt,
           avatar: user.avatar,
+          rooms: user.rooms,
         };
         res.status(200).json({ success: true, user: val });
       });

@@ -415,7 +415,10 @@ const RoomProfile = ({
           <div className=' mt-2 rounded'>
             {room.members.map((member, id) => (
               <div key={id}>
-                <ContextMenuTrigger id={'same_unique_identifier' + member._id}>
+                <ContextMenuTrigger
+                  id={'same_unique_identifier' + member._id}
+                  holdToDisplay={500}
+                >
                   <div className='d-flex align-items-center justify-content-between py-2  sidebar-room border-bottom px-2 border-secondary position-relative'>
                     <div className='d-flex align-items-center '>
                       <img

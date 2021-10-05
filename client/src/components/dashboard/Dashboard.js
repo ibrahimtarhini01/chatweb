@@ -19,19 +19,19 @@ const Dashboard = ({
   roomPreview,
 }) => {
   const [profileOpen, setProfileOpen] = useState(null);
-  const [userProfile, setUserProfile] = useState(true);
+  const [userProfile, setUserProfile] = useState(null);
 
   if (!isAuthenticated && !loading) {
     return <Redirect to='/account' />;
   }
   return (
     <Fragment>
-      {userRoomsLoading ? (
+      {userRoomsLoading || loading ? (
         <Loading />
       ) : (
         <div>
           <div className='dashboard bg-main d-flex position-relative'>
-            {userProfile && (
+            {userProfile === true && (
               <UserProfile
                 open={profileOpen}
                 setProfileOpen={setProfileOpen}
@@ -39,7 +39,7 @@ const Dashboard = ({
               />
             )}
 
-            {!userProfile && (
+            {userProfile === false && (
               <RoomProfile
                 open={profileOpen}
                 setProfileOpen={setProfileOpen}

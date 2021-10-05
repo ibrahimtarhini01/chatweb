@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../../actions/auth';
 import { clearRoom } from '../../../actions/room';
@@ -19,6 +20,7 @@ const SideBarNav = ({
   roomPreview,
   setUserProfile,
 }) => {
+  const hist = useHistory();
   return (
     <Fragment>
       <div className='sidebar-nav bg-main d-flex justify-content-between align-items-center'>
@@ -89,6 +91,7 @@ const SideBarNav = ({
                 className='dropdown-item text-white  py-2'
                 onClick={() => {
                   logout();
+                  hist.push('/account');
                 }}
               >
                 <i className='fas fa-sign-out-alt'></i> Logout

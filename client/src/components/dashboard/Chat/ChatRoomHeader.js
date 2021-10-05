@@ -18,11 +18,8 @@ const ChatRoomHeader = ({
         className='fas fa-arrow-left mr-4 ml-2 fa-lg cursor-pointer'
         onClick={() => {
           setProfileOpen(false);
-          setUserProfile(true);
-
-          setTimeout(() => {
-            clearRoom();
-          }, 500);
+          setUserProfile(null);
+          clearRoom();
         }}
       ></i>
       <div className='mr-2 cursor-pointer'>

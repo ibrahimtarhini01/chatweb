@@ -26,7 +26,7 @@ const Dashboard = ({
   }
   return (
     <Fragment>
-      {userRoomsLoading || loading ? (
+      {userRoomsLoading || (!isAuthenticated && !loading) || loading ? (
         <Loading />
       ) : (
         <div>

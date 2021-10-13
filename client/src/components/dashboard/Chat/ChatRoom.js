@@ -1,7 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import io from 'socket.io-client';
-import { connect } from 'react-redux';
-import { getChats, afterPostMessage } from '../../../actions/chat';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
+import io, { Socket } from 'socket.io-client';
 import ChatRoomFooter from './ChatRoomFooter';
 import ChatRoomHeader from './ChatRoomHeader';
 import ChatRoomMessages from './ChatRoomMessages';
@@ -9,14 +7,42 @@ import ChatRoomDefault from './ChatRoomDefault';
 
 const ChatRoom = ({
   user,
-  getChats,
-  afterPostMessage,
   room,
   next,
   setProfileOpen,
   setUserProfile,
   profileOpen,
+  socket,
 }) => {
+  const [messages, setMessages] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+
+  useEffect(() => {
+    if (room !== null) socket.current.emit('addRoom', room._id);
+  }, [room]);
+
+  useEffect(() => {
+    socket.current.on('getMessage', (data) => {
+      if (data.sender.id !== user.id)
+        setArrivalMessage({
+          sender: data.sender,
+          message: data.message,
+          room: data.room,
+          createdAt: Date.now(),
+        });
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  useEffect(() => {
+    if (room !== null) {
+      setMessages(room.chat);
+    }
+  }, [room]);
+
   return (
     <Fragment>
       {room !== null ? (
@@ -45,8 +71,14 @@ const ChatRoom = ({
             setUserProfile={setUserProfile}
             profileOpen={profileOpen}
           />
-          <ChatRoomMessages />
-          <ChatRoomFooter user={user} />
+          <ChatRoomMessages user={user} messages={messages} />
+          <ChatRoomFooter
+            user={user}
+            setMessages={setMessages}
+            messages={messages}
+            socket={socket}
+            room={room}
+          />
         </div>
       ) : (
         <ChatRoomDefault />
@@ -55,4 +87,4 @@ const ChatRoom = ({
   );
 };
 
-export default connect(null, { getChats, afterPostMessage })(ChatRoom);
+export default ChatRoom;

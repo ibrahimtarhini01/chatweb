@@ -24,15 +24,19 @@ const RoomItem = ({ room, setCurrentRoom }) => {
       <div className='flex-grow-1 border-bottom border-dark sidebar-room-info'>
         <div className='sidebar-room-info-top'>
           <div className='sidebar-room-title'>{room.title}</div>
-          {room.lastMessage !== undefined ? (
+          {room.lastMessage.createdAt !== undefined ? (
             <div className='sidebar-room-time secondary '>
-              {room.lastMessage.createdAt}
+              {new Date(room.lastMessage.createdAt).toLocaleString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true,
+              })}
             </div>
           ) : (
             <div className='sidebar-room-time secondary '></div>
           )}
         </div>
-        {room.lastMessage !== undefined ? (
+        {room.lastMessage.username !== undefined ? (
           <div className='sidebar-room-message secondary'>
             <div className='sidebar-room-user'>
               {room.lastMessage.username}:&nbsp;{' '}

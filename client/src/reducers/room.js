@@ -39,7 +39,6 @@ export default function (state = initialState, action) {
         ...state,
         userRooms: [...state.userRooms, payload],
         room: payload,
-        roomLoading: false,
         roomLoading: null,
         next: true,
       };

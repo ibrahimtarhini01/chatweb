@@ -5,8 +5,10 @@ const chat = new mongoose.Schema({
     type: String,
   },
   sender: {
-    type: mongoose.Types.ObjectId,
-    ref: 'User',
+    id: { type: mongoose.Types.ObjectId, ref: 'User' },
+    username: {
+      type: String,
+    },
   },
   room: {
     type: mongoose.Types.ObjectId,

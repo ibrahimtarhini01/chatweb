@@ -1,5 +1,6 @@
 const Room = require('../models/Room');
 const User = require('../models/User');
+const Chat = require('../models/Chat');
 const cloudinary = require('cloudinary').v2;
 // REFACTOR PROBABILITY: 100%
 // add invitation token that can be updated instead of room id
@@ -83,7 +84,9 @@ exports.getRoom = async (req, res) => {
         .status(400)
         .json({ errors: [{ message: 'You are not authorized' }] });
     }
-    res.status(200).json({ success: true, data: room });
+    console.log(room);
+    const chat = await Chat.find({ room: room.id });
+    res.status(200).json({ success: true, data: { ...room, roomChat: chat } });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server Error' });
   }
@@ -112,15 +115,22 @@ exports.getRoomPreview = async (req, res) => {
 exports.getUserRooms = async (req, res) => {
   try {
     console.log(req.user.rooms);
-    const rooms = await Room.find({ _id: { $in: req.user.rooms } }).select(
+    let rooms = await Room.find({ _id: { $in: req.user.rooms } }).select(
       '-password',
     );
-    console.log(rooms);
+
+    for (let i = 0; i < rooms.length; i++) {
+      const chat = await Chat.find({ room: rooms[i].id }).select('-_id -__v');
+      console.log(chat);
+      rooms[i] = { ...rooms[i]._doc, chat };
+    }
+
     res.status(200).json({
       success: true,
       data: rooms,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ success: false, error: 'Server Error' });
   }
 };

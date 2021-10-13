@@ -9,6 +9,7 @@ const DashboardSideBar = ({
   next,
   roomPreview,
   setUserProfile,
+  socket,
 }) => {
   return (
     <div
@@ -24,7 +25,7 @@ const DashboardSideBar = ({
         roomPreview={roomPreview}
         setUserProfile={setUserProfile}
       />
-      <UserRooms rooms={rooms} />
+      <UserRooms rooms={rooms} socket={socket} user={user} />
     </div>
   );
 };

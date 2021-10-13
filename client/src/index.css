@@ -473,6 +473,7 @@ button:focus {
   width: fit-content;
   max-width: 75%;
   min-width: 15%;
+  margin-right: auto;
   background-color: #262d31;
   color: white;
   border-radius: 7.5px;

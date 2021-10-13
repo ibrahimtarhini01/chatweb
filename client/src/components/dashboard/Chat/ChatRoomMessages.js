@@ -1,78 +1,26 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getChats, afterPostMessage } from '../../../actions/chat';
+import React, { useEffect, useRef } from 'react';
+
 import ChatRoomMessage from './ChatRoomMessage';
 
-const ChatRoomMessages = ({ getChats, afterPostMessage, chats }) => {
+const ChatRoomMessages = ({ messages, user }) => {
+  const scrollRef = useRef();
   useEffect(() => {
-    if (chats === null) {
-      //getChats();
-    }
-  }, [getChats]);
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
   return (
     <div className='chatroom-container d-flex flex-column'>
-      <ChatRoomMessage
-        user={false}
-        username={'oppailolitrap'}
-        text={
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, labore.'
-        }
-        time={'4:07 pm'}
-      />
-      <ChatRoomMessage
-        user={true}
-        username={'oppailolitrap'}
-        text={'no'}
-        time={'4:10 pm'}
-      />
-      <ChatRoomMessage
-        user={false}
-        username={'oppailolitrap'}
-        text={
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, labore.'
-        }
-        time={'4:07 pm'}
-      />
-      <ChatRoomMessage
-        user={true}
-        username={'oppailolitrap'}
-        text={'no'}
-        time={'4:10 pm'}
-      />
-      <ChatRoomMessage
-        user={false}
-        username={'oppailolitrap'}
-        text={
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, labore.'
-        }
-        time={'4:07 pm'}
-      />
-      <ChatRoomMessage
-        user={true}
-        username={'oppailolitrap'}
-        text={'no'}
-        time={'4:10 pm'}
-      />
-      <ChatRoomMessage
-        user={false}
-        username={'oppailolitrap'}
-        text={
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, labore.'
-        }
-        time={'4:07 pm'}
-      />
-      <ChatRoomMessage
-        user={true}
-        username={'oppailolitrap'}
-        text={'no'}
-        time={'4:10 pm'}
-      />
+      {messages.map((message, id) => (
+        <ChatRoomMessage
+          key={id}
+          user={message.sender.id === user.id}
+          username={message.sender.username}
+          text={message.message}
+          time={message.createdAt}
+        />
+      ))}
+      <span ref={scrollRef}></span>
     </div>
   );
 };
-const mapStateToProps = (state) => ({
-  chats: state.chat.chats,
-});
-export default connect(mapStateToProps, { getChats, afterPostMessage })(
-  ChatRoomMessages,
-);
+
+export default ChatRoomMessages;

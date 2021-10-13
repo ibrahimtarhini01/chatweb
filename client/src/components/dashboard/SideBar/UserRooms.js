@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import RoomItem from './RoomItem';
 
-const UserRooms = ({ rooms }) => {
-  const [search, setSearch] = useState(rooms);
+const UserRooms = ({ rooms, socket, user }) => {
+  const [search, setSearch] = useState(null);
   useEffect(() => {
-    setSearch(rooms);
-  }, [rooms, setSearch]);
+    if (search === null) {
+      setSearch(rooms);
+      rooms.forEach((room) => {
+        console.log(room);
+        socket.current.emit('joinUser', room._id, user.username);
+      });
+    }
+  }, [rooms, setSearch, socket]);
   return (
     <div>
       <div className=' border-bottom border-dark py-2 px-4  '>
@@ -36,11 +42,13 @@ const UserRooms = ({ rooms }) => {
           </div>
         </div>
       </div>
-      <div className='overflow-auto rooms'>
-        {search.map((room, id) => {
-          return <RoomItem room={room} key={id} />;
-        })}
-      </div>
+      {search !== null && (
+        <div className='overflow-auto rooms'>
+          {search.map((room, id) => {
+            return <RoomItem room={room} key={id} />;
+          })}
+        </div>
+      )}
     </div>
   );
 };

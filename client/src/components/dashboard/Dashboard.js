@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
+import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from '../layout/Loading';
@@ -20,6 +21,12 @@ const Dashboard = ({
 }) => {
   const [profileOpen, setProfileOpen] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
+
+  const socket = useRef();
+
+  useEffect(() => {
+    socket.current = io('ws://localhost:8900');
+  }, []);
 
   if (!isAuthenticated && !loading) {
     return <Redirect to='/account' />;
@@ -56,6 +63,7 @@ const Dashboard = ({
               rooms={userRooms}
               room={room}
               next={next}
+              socket={socket}
             />
 
             <ChatRoom
@@ -65,6 +73,7 @@ const Dashboard = ({
               setProfileOpen={setProfileOpen}
               setUserProfile={setUserProfile}
               profileOpen={profileOpen}
+              socket={socket}
             />
           </div>
         </div>

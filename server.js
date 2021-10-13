@@ -27,7 +27,6 @@ dotenv.config({ path: './config/config.env' });
 // Init Express App
 const app = express();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
 
 //Connect to DB
 connectDB();
@@ -106,24 +105,10 @@ app.use('/api/auth', auth);
 app.use('/api/chat', chat);
 app.use('/api/room', room);
 
-const Chat = require('./models/Chat');
-io.on('connection', (socket) => {
-  socket.on('Input Chat Message', async (msg) => {
-    try {
-      let chat = await Chat({
-        message: msg.chatMessage,
-        sender: msg.userID,
-      });
-      console.log(1);
-      await chat.save();
-      await Chat.find({ _id: doc._id });
-      return io.emit('Output Chat Message', doc);
-    } catch (error) {
-      console.error(error);
-    }
-  });
-});
-
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, console.log(`Server running on port ${PORT}`.yellow.bold));
+
+const { run } = require('./utils/socketFunctionality');
+
+run();

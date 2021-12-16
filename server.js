@@ -14,6 +14,7 @@ const passportLocal = require('passport-local').Strategy;
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose');
 
 // Security
 const helmet = require('helmet');
@@ -66,7 +67,7 @@ app.use(
 // Enable CORS
 app.use(
   cors({
-    origin: 'https://localhost:5000',
+    origin: 'https://chattweb.herokuapp.com/',
     credentials: true,
   }),
 );
@@ -82,6 +83,7 @@ app.use(
     store: new MongoStore({
       url: process.env.MONGO_URI,
       collection: 'sessions',
+      mongooseConnection: mongoose.connection,
     }),
   }),
 );

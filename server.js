@@ -72,8 +72,6 @@ app.use(
   }),
 );
 
-// ---------- Passport Middleware and Set Up ----------
-console.log(process.env.SESSION_SECRET, process.env.MONGO_URI);
 // Set up express session
 app.use(
   session({
@@ -83,7 +81,6 @@ app.use(
     store: new MongoStore({
       url: process.env.MONGO_URI,
       collection: 'sessions',
-      //mongooseConnection: mongoose.connection,
     }),
   }),
 );

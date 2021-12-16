@@ -16,7 +16,7 @@ const Navbar = ({ isAuth, isAuthenticated }) => {
         className='navbar-brand text-white pt-2 text-center w-100  '
         to='/'
       >
-        <img src='/chathub-brand.jpg' alt='brand' />
+        <img src='/chatweb-brand.jpg' alt='brand' />
       </NavLink>
     </div>
   );

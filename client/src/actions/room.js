@@ -7,6 +7,7 @@ import {
   PREVIEW_ROOM,
   ROOM_AVATAR,
   CLEAR_ROOM_PREVIEW,
+  SET_LAST_MESSAGE,
 } from './types';
 import api from '../utils/api';
 import { setAlert } from './alerts';
@@ -14,7 +15,9 @@ import { setAlert } from './alerts';
 export const createRoom = (data) => async (dispatch) => {
   try {
     const res = await api.post('/room', data);
+    console.log(res.data.data);
     dispatch({ type: CREATE_ROOM, payload: res.data.data });
+    dispatch(getUserRooms());
   } catch (error) {
     console.log(error);
   }
@@ -25,8 +28,8 @@ export const joinRoom = (id, formData) => async (dispatch) => {
     console.log(id);
     await api.post(`/room/join/${id}`, formData);
     dispatch(getRoomById(id));
-    dispatch(clearRoomPreview());
     dispatch(getUserRooms());
+    dispatch(clearRoomPreview());
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -36,7 +39,9 @@ export const joinRoom = (id, formData) => async (dispatch) => {
   }
 };
 
-export const addUserRoom = () => async (dispatch) => {};
+export const setLastMessage = (data) => async (dispatch) => {
+  dispatch({ type: SET_LAST_MESSAGE, payload: data });
+};
 
 export const leaveRoom = (id) => async (dispatch) => {
   try {

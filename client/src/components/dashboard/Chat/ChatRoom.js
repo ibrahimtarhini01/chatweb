@@ -13,29 +13,35 @@ const ChatRoom = ({
   setUserProfile,
   profileOpen,
   socket,
+  setLastMessage,
 }) => {
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
   useEffect(() => {
-    if (room !== null) socket.current.emit('addRoom', room._id);
+    if (room !== null && socket.current !== undefined)
+      socket.current.emit('addRoom', room._id);
   }, [room]);
 
   useEffect(() => {
-    socket.current.on('getMessage', (data) => {
-      if (data.sender.id !== user.id)
-        setArrivalMessage({
-          sender: data.sender,
-          message: data.message,
-          room: data.room,
-          createdAt: Date.now(),
-        });
-    });
+    if (socket.current !== undefined)
+      socket.current.on('getMessage', (data) => {
+        if (data.sender.id !== user.id) {
+          setLastMessage(data);
+          setArrivalMessage({
+            sender: data.sender,
+            message: data.message,
+            room: data.room,
+            createdAt: Date.now(),
+          });
+        }
+      });
   }, [socket]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage]);
+    console.log(arrivalMessage);
+  }, [arrivalMessage]);*/
 
   useEffect(() => {
     if (room !== null) {
@@ -71,12 +77,16 @@ const ChatRoom = ({
             setUserProfile={setUserProfile}
             profileOpen={profileOpen}
           />
-          <ChatRoomMessages user={user} messages={messages} />
+          <ChatRoomMessages
+            user={user}
+            messages={messages === undefined ? [] : messages}
+          />
           <ChatRoomFooter
             user={user}
             setMessages={setMessages}
             messages={messages}
             socket={socket}
+            setLastMessage={setLastMessage}
             room={room}
           />
         </div>

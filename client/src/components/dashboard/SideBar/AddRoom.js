@@ -170,7 +170,7 @@ const AddRoom = ({ user, createRoom, room, next, clearRoom }) => {
               </div>
             </div>
           )}
-          <label htmlFor='link'>Invitation Link</label>
+          <label htmlFor='link'>Invitation ID</label>
           <div className='form-inline mb-4 bg-transparent border-primary'>
             <div className='input-group w-100 '>
               <input
@@ -179,7 +179,7 @@ const AddRoom = ({ user, createRoom, room, next, clearRoom }) => {
                 id='link'
                 readOnly
                 disabled
-                value={`https://localhost:3000/api/room/join/${room._id}`}
+                value={room._id}
               />{' '}
               <div className='input-group-prepend  bg-transparent '>
                 <button
@@ -187,11 +187,7 @@ const AddRoom = ({ user, createRoom, room, next, clearRoom }) => {
                   id='copy'
                   data-toggle='tooltip'
                   title='Copy to Clipboard'
-                  onClick={() =>
-                    navigator.clipboard.writeText(
-                      `https://localhost:3000/api/room/join/${room._id}`,
-                    )
-                  }
+                  onClick={() => navigator.clipboard.writeText(room._id)}
                 >
                   <i className='fas fa-copy'></i>
                 </button>

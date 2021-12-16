@@ -5,6 +5,7 @@ import {
   AUTH_ERROR,
   AUTH,
   RESET_PASSWORD,
+  CLEAR_ROOMS,
 } from './types';
 import api from '../utils/api';
 import { setAlert } from './alerts';
@@ -94,6 +95,7 @@ export const isAuth = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     await api.get('/auth/logout');
+    dispatch({ type: CLEAR_ROOMS });
     dispatch({ type: LOGOUT });
   } catch (err) {
     console.log(err);

@@ -3,12 +3,19 @@ import RoomItem from './RoomItem';
 
 const UserRooms = ({ rooms, socket, user }) => {
   const [search, setSearch] = useState(null);
+
+  useEffect(() => {
+    if (search !== null) {
+      setSearch(rooms);
+    }
+  }, [rooms, setSearch]);
   useEffect(() => {
     if (search === null) {
       setSearch(rooms);
       rooms.forEach((room) => {
         console.log(room);
-        socket.current.emit('joinUser', room._id, user.username);
+        if (socket.current !== undefined)
+          socket.current.emit('joinUser', room._id, user.username);
       });
     }
   }, [rooms, setSearch, socket]);

@@ -32,22 +32,12 @@ const App = () => {
           <Route
             exact
             path='/'
-            component={() => (
-              <Container
-                Component={Account}
-                size='container px-0 px-sm-3 mt-5'
-              />
-            )}
+            component={() => <Container Component={Account} size='' />}
           />
           <Route
             exact
             path='/account'
-            component={() => (
-              <Container
-                Component={Account}
-                size='container px-0 px-sm-3 mt-5'
-              />
-            )}
+            component={() => <Container Component={Account} size='' />}
           />
           <Route exact path='/reset' component={Reset} />
           <Route exact path='/reset/:token' component={ResetPassword} />

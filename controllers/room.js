@@ -61,7 +61,7 @@ exports.createRoom = async (req, res) => {
         runValidators: true,
       },
     );
-    res.status(200).json({ success: true, data: room });
+    res.status(200).json({ success: true, data: room._doc });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error: 'Server Error' });
@@ -86,7 +86,7 @@ exports.getRoom = async (req, res) => {
     }
     console.log(room);
     const chat = await Chat.find({ room: room.id });
-    res.status(200).json({ success: true, data: { ...room, roomChat: chat } });
+    res.status(200).json({ success: true, data: { ...room._doc, chat: chat } });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server Error' });
   }

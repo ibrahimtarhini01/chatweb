@@ -202,6 +202,30 @@ const RoomProfile = ({
             </div>
           </div>
         </div>
+        <div className='form bg-transparent text-left teal border-secondary mx-4 my-2'>
+          <label htmlFor='invitation'>Invitation ID</label>
+          <div className='input-group w-100 '>
+            <input
+              type='text'
+              className='form-control bg-transparent border-secondary text-white '
+              id='link'
+              readOnly
+              disabled
+              value={room._id}
+            />{' '}
+            <div className='input-group-prepend  bg-transparent '>
+              <button
+                className=' border-left-0 cursor-pointer border-secondary btn btn-outline-secondary text-white rounded-right'
+                id='copy'
+                data-toggle='tooltip'
+                title='Copy to Clipboard'
+                onClick={() => navigator.clipboard.writeText(room._id)}
+              >
+                <i className='fas fa-copy'></i>
+              </button>
+            </div>
+          </div>
+        </div>
         {admin && (
           <div className=''>
             {room.public ? (

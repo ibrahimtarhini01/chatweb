@@ -1,13 +1,14 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from '../layout/Loading';
 import DashboardSideBar from './SideBar/DashboardSideBar';
 import UserProfile from './Profile/UserProfile';
 import RoomProfile from './Profile/RoomProfile';
-import { Redirect } from 'react-router-dom';
 import ChatRoom from './Chat/ChatRoom';
+import { setLastMessage } from '../../actions/room';
 
 const Dashboard = ({
   isAuthenticated,
@@ -18,6 +19,7 @@ const Dashboard = ({
   room,
   next,
   roomPreview,
+  setLastMessage,
 }) => {
   const [profileOpen, setProfileOpen] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
@@ -72,6 +74,7 @@ const Dashboard = ({
               next={next}
               setProfileOpen={setProfileOpen}
               setUserProfile={setUserProfile}
+              setLastMessage={setLastMessage}
               profileOpen={profileOpen}
               socket={socket}
             />
@@ -91,6 +94,7 @@ Dashboard.propTypes = {
   room: PropTypes.object,
   next: PropTypes.bool.isRequired,
   roomPreview: PropTypes.object,
+  setLastMessage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -104,4 +108,4 @@ const mapStateToProps = (state) => ({
   roomPreview: state.room.roomPreview,
 });
 
-export default connect(mapStateToProps, {})(Dashboard);
+export default connect(mapStateToProps, { setLastMessage })(Dashboard);

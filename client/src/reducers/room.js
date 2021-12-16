@@ -7,6 +7,8 @@ import {
   LEAVE_ROOM,
   PREVIEW_ROOM,
   ROOM_AVATAR,
+  CLEAR_ROOMS,
+  SET_LAST_MESSAGE,
 } from '../actions/types';
 
 const initialState = {
@@ -61,6 +63,52 @@ export default function (state = initialState, action) {
       };
     case PREVIEW_ROOM:
       return { ...state, roomPreview: payload };
+    case SET_LAST_MESSAGE: {
+      return {
+        ...state,
+        room:
+          state.room !== null
+            ? {
+                ...state.room,
+                lastMessage: {
+                  message: payload.message,
+                  username: payload.sender.username,
+                  createdAt: Date.now(),
+                },
+                chat: [
+                  ...state.room.chat,
+                  {
+                    message: payload.message,
+                    sender: payload.sender,
+                    room: payload.room,
+                    createdAt: Date.now(),
+                  },
+                ],
+              }
+            : null,
+        userRooms: state.userRooms.map((room, id) =>
+          payload.room === room._id
+            ? {
+                ...room,
+                lastMessage: {
+                  message: payload.message,
+                  username: payload.sender.username,
+                  createdAt: Date.now(),
+                },
+                chat: [
+                  ...room.chat,
+                  {
+                    message: payload.message,
+                    sender: payload.sender,
+                    room: payload.room,
+                    createdAt: Date.now(),
+                  },
+                ],
+              }
+            : room,
+        ),
+      };
+    }
     case CLEAR_ROOM:
       return {
         ...state,
@@ -73,6 +121,16 @@ export default function (state = initialState, action) {
         ...state,
         roomPreview: null,
       };
+    case CLEAR_ROOMS: {
+      return {
+        room: null,
+        userRooms: null,
+        roomLoading: true,
+        userRoomsLoading: true,
+        roomPreview: null,
+        next: false,
+      };
+    }
 
     default:
       return state;

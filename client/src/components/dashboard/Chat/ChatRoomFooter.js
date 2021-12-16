@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import api from '../../../utils/api';
-const ChatRoomFooter = ({ user, setMessages, messages, socket, room }) => {
+const ChatRoomFooter = ({
+  user,
+  setMessages,
+  messages,
+  socket,
+  room,
+  setLastMessage,
+}) => {
   const [message, setMessage] = useState('');
 
   const onSubmit = async (e) => {
@@ -11,6 +18,14 @@ const ChatRoomFooter = ({ user, setMessages, messages, socket, room }) => {
       username: user.username,
       sender: user.id,
     };
+
+    setLastMessage({
+      sender: { id: data.sender, username: data.username },
+      room: room._id,
+      message: data.message,
+      createdAt: data.createdAt,
+    });
+
     setMessages([
       ...messages,
       {
@@ -20,6 +35,7 @@ const ChatRoomFooter = ({ user, setMessages, messages, socket, room }) => {
         createdAt: data.createdAt,
       },
     ]);
+
     setMessage('');
 
     socket.current.emit('sendMessage', {

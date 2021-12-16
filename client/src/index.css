@@ -513,6 +513,19 @@ button:focus {
   box-shadow: 0 1px 3px rgba(var(0, 0, 0, 0.4));
 }
 
+/*chatroom day indicator*/
+.chatroom-day-indicator {
+  background-color: #1e2a30;
+
+  height: 32px;
+  text-align: center;
+  border-radius: 7.5px;
+  margin-bottom: 12px;
+  font-size: small;
+  line-height: 32px;
+  vertical-align: middle;
+}
+
 /* room profile members context menu*/
 .react-contextmenu {
   z-index: 200;

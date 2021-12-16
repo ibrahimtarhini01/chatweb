@@ -43,13 +43,15 @@ const ChatRoomHeader = ({
         <div className='chatroom-nav-title '>{room.title}</div>
         <div className='chatroom-nav-message '>
           <span className='chatroom-nav-text secondary'>
-            {room.members.map((m, id) => {
-              if (id !== room.members.length - 1) {
-                return m.username + ' , ';
-              } else {
-                return m.username;
-              }
-            })}
+            {room.members !== undefined
+              ? room.members.map((m, id) => {
+                  if (id !== room.members.length - 1) {
+                    return m.username + ' , ';
+                  } else {
+                    return m.username;
+                  }
+                })
+              : ''}
           </span>
         </div>
       </div>

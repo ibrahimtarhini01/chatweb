@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import ChatRoomMessage from './ChatRoomMessage';
 
-const ChatRoomMessages = ({ messages, user }) => {
+const ChatRoomMessages = ({ messages, user, room }) => {
   const scrollRef = useRef();
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });

@@ -18,12 +18,13 @@ const ChatRoom = ({
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
   useEffect(() => {
-    if (room !== null && socket.current !== undefined)
+    if (room !== null && socket.current !== undefined) {
       socket.current.emit('addRoom', room._id);
+    }
   }, [room]);
 
   useEffect(() => {
-    if (socket.current !== undefined)
+    if (socket.current !== undefined) {
       socket.current.on('getMessage', (data) => {
         if (data.sender.id !== user.id) {
           setLastMessage(data);
@@ -35,6 +36,7 @@ const ChatRoom = ({
           });
         }
       });
+    }
   }, [socket]);
 
   /*useEffect(() => {
@@ -78,7 +80,14 @@ const ChatRoom = ({
           />
           <ChatRoomMessages
             user={user}
-            messages={messages === undefined ? [] : messages}
+            messages={
+              messages === undefined
+                ? []
+                : messages.filter((message) =>
+                    room === null ? true : message.room === room._id,
+                  )
+            }
+            room={room}
           />
           <ChatRoomFooter
             user={user}

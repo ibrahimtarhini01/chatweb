@@ -33,6 +33,10 @@ const Dashboard = ({
     });
   }, []);
 
+  /*useEffect(() => {
+    socket.current = io('ws://localhost:5000');
+  }, []);*/
+
   if (!isAuthenticated && !loading) {
     return <Redirect to='/account' />;
   }

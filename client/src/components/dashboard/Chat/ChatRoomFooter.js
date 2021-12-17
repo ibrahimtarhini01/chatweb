@@ -67,6 +67,7 @@ const ChatRoomFooter = ({
               value={message}
               required
               onChange={(e) => setMessage(e.target.value)}
+              autoComplete='off'
             />
           </div>
           <button className='text-white btn p-0 ml-3'>

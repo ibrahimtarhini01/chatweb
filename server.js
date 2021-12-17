@@ -15,7 +15,6 @@ const passportLocal = require('passport-local').Strategy;
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const mongoose = require('mongoose');
 
 // Security
 const helmet = require('helmet');

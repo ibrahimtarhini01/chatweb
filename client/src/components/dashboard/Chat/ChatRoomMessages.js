@@ -31,7 +31,7 @@ const ChatRoomMessages = ({ messages, user }) => {
             : '10/10/1975',
         ) ? (
           <ChatRoomMessage
-            key={id}
+            key={id + message}
             user={message.sender.id === user.id}
             username={message.sender.username}
             text={message.message}
@@ -47,7 +47,7 @@ const ChatRoomMessages = ({ messages, user }) => {
               </div>
             </div>
             <ChatRoomMessage
-              key={id}
+              key={id + message}
               user={message.sender.id === user.id}
               username={message.sender.username}
               text={message.message}

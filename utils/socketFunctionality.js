@@ -1,11 +1,3 @@
-const io = require('socket.io')(8900, {
-  cors: {
-    origin: 'https://chattweb.herokuapp.com',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['my-custom-header'],
-    credentials: true,
-  },
-});
 let c_users = [];
 
 const joinUser = (id, username, room) => {
@@ -22,7 +14,7 @@ const getUser = (room) => {
   return c_users.find((p_user) => p_user.room === room);
 };
 
-exports.run = () => {
+exports.run = (io) => {
   //initializing the socket io connection
   io.on('connection', (socket) => {
     //when ceonnect

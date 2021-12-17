@@ -70,7 +70,13 @@ const ChatRoomHeader = ({
             className='dropdown-menu dropdown-menu-right border-0 shadow cursor-pointer  bg-main text-white'
             aria-labelledby='dropdownMenuButton'
           >
-            <div className='dropdown-item text-white  py-2' onClick={() => {}}>
+            <div
+              className='dropdown-item text-white  py-2'
+              onClick={() => {
+                setUserProfile(false);
+                setProfileOpen(true);
+              }}
+            >
               <i className='fas fa-users mr-2'></i> Room Profile
             </div>
 

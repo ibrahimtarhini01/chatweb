@@ -39,7 +39,7 @@ exports.run = (io) => {
         username: p_user.username,
         text: `${p_user.username} has joined the chat`,
       });*/
-      console.log(c_users);
+      //console.log(c_users);
     });
 
     //send and get message

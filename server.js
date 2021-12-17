@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const compression = require('compression');
 const dotenv = require('dotenv');
+const path = require('path');
 
 // Passport
 const passport = require('passport');

@@ -23,7 +23,7 @@ exports.run = (io) => {
     //take roomId and socketId from room
     socket.on('joinUser', (roomId, username) => {
       const p_user = joinUser(socket.id, username, roomId);
-      console.log(socket.id, '=id');
+      console.log(socket.id, '= id');
       socket.join(p_user.room);
 
       //display a welcome message to the user who have joined a room
@@ -44,7 +44,7 @@ exports.run = (io) => {
 
     //send and get message
     socket.on('sendMessage', ({ sender, room, message }) => {
-      console.log(c_users);
+      //console.log(c_users);
       const p_user = getUser(room);
       console.log(sender.username);
       console.log(p_user);

@@ -1,6 +1,9 @@
 const io = require('socket.io')(8900, {
   cors: {
-    origin: 'https://chattweb.herokuapp.com/',
+    origin: '*',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['my-custom-header'],
+    credentials: true,
   },
 });
 let c_users = [];

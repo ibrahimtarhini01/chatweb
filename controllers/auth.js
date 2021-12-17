@@ -30,7 +30,7 @@ exports.register = async (req, res) => {
     await user.save({ validateBeforeSave: false });
 
     // Create reset URL
-    const resetUrl = `http://localhost:3000/confirm/${resetToken}`;
+    const resetUrl = `https://chattweb.herokuapp.com/confirm/${resetToken}`;
 
     console.log(resetUrl);
 
@@ -190,7 +190,7 @@ exports.resetPasswordEmail = async (req, res) => {
     const resetToken = user.getResetToken();
     await user.save({ validateBeforeSave: false });
     // Create reset URL
-    const resetUrl = `http://localhost:3000/reset/${resetToken}`;
+    const resetUrl = `https://chattweb.herokuapp.com/reset/${resetToken}`;
 
     console.log(resetUrl);
 

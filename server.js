@@ -106,13 +106,12 @@ app.use('/api/room', room);
 
 //Serve static assets in production
 // Set static folder
-if (process.env.NODE_ENV === 'd') {
-  app.use(express.static(__dirname + '/client/build'));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
+app.use(express.static(__dirname + '/client/build'));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 

@@ -17,7 +17,11 @@
 ::-webkit-scrollbar-thumb {
   background: #394145;
 }
-
+html,
+body {
+  min-height: 100%;
+  height: 100%;
+}
 body {
   background-color: #202225;
   color: #d4d5d7;
@@ -27,8 +31,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
-  height: 100vh;
+  position: relative;
 }
 
 * {

@@ -27,7 +27,10 @@ const Dashboard = ({
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io('ws://localhost:3000');
+    socket.current = io('https://chattweb.herokuapp.com/', {
+      withCredentials: true,
+      extraHeaders: { 'my-custom-header': 'abcd' },
+    });
   }, []);
 
   if (!isAuthenticated && !loading) {

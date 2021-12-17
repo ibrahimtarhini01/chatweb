@@ -106,7 +106,7 @@ app.use('/api/room', room);
 
 //Serve static assets in production
 // Set static folder
-if (process.env.NODE_ENV === 'p') {
+if (process.env.NODE_ENV === 'd') {
   app.use(express.static(__dirname + '/client/build'));
 
   app.get('*', (req, res) => {

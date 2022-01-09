@@ -66,6 +66,7 @@ const ChatRoom = ({
               backgroundImage: 'url("bg.png")',
               height: '100%',
               width: '100%',
+              position: 'relative',
               backgroundRepeat: 'repeat',
               opacity: 0.06,
               backgroundAttachment: 'fixed',

@@ -263,8 +263,9 @@ button:focus {
     width: 35%;
   }
   .chat-desktop,
-  .chat-desktop-default {
-    width: 65%;
+  .chat-desktop-default,
+  .chatroom-nav {
+    width: 65% !important;
   }
 }
 
@@ -274,8 +275,9 @@ button:focus {
     width: 40%;
   }
   .chat-desktop,
-  .chat-desktop-default {
-    width: 60%;
+  .chat-desktop-default,
+  .chatroom-nav {
+    width: 60% !important;
   }
 }
 @media (max-width: 800px) {
@@ -423,7 +425,7 @@ button:focus {
 
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 70%;
   z-index: 100;
   box-shadow: 0 1px 3px rgba(var(0, 0, 0, 0.4));
 }

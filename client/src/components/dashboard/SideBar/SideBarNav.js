@@ -81,6 +81,7 @@ const SideBarNav = ({
               <div
                 className='dropdown-item text-white  py-2'
                 onClick={() => {
+                  setUserProfile(true);
                   setProfileOpen(true);
                 }}
               >

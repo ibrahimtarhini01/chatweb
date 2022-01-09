@@ -17,9 +17,12 @@ const ChatRoomMessages = ({ messages, user, room }) => {
   };
 
   const getDiff = (date) => {
-    const diffInMs = Date.now() - new Date(date);
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-    return Math.ceil(diffInDays);
+    const date1 = new Date(new Date(Date.now()).toDateString());
+    const date2 = new Date(new Date(date).toDateString());
+    const diffTime = date1.getTime() - date2.getTime();
+    const DiffDays = diffTime / (1000 * 3600 * 24);
+
+    return Math.floor(DiffDays);
   };
   return (
     <div className='chatroom-container d-flex flex-column'>
@@ -41,7 +44,9 @@ const ChatRoomMessages = ({ messages, user, room }) => {
           <div className=''>
             <div className='w-100 d-flex justify-content-center'>
               <div className='chatroom-day-indicator px-2'>
-                {getDiff(message.createdAt) === 1
+                {getDiff(message.createdAt) < 1
+                  ? 'Today'
+                  : getDiff(message.createdAt) === 1
                   ? 'yesterday'
                   : getDiff(message.createdAt) + ' days ago'}
               </div>
